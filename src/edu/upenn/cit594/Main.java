@@ -3,6 +3,8 @@ package edu.upenn.cit594;
 import edu.upenn.cit594.datamanagement.ParkingViolationCSVReader;
 import edu.upenn.cit594.datamanagement.PopulationDataReader;
 import edu.upenn.cit594.datamanagement.PropertyValueCSVReader;
+import edu.upenn.cit594.processor.Processor;
+import edu.upenn.cit594.ui.UserInterface;
 
 public class Main {
 
@@ -13,6 +15,9 @@ public class Main {
         String parkingFileName = "parking.csv";
         String populationFileName = "population.txt";
         String propertyFileName = "properties.csv";
+        String loggerFileName = "logger.txt";
+
+        //First thing we should do is log the current time and the runtime arguments 
 
         ParkingViolationCSVReader parkingFileReader = new ParkingViolationCSVReader(parkingFileName);
 
@@ -20,9 +25,11 @@ public class Main {
 
         PropertyValueCSVReader propertyReader = new PropertyValueCSVReader(propertyFileName);
 
+        Processor processor = new Processor(parkingFileReader, populationReader, propertyReader);
 
+        UserInterface ui = new UserInterface(processor);
 
-
+        ui.start();
 
     }
 

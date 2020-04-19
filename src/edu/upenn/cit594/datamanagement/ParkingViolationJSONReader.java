@@ -10,4 +10,9 @@ public class ParkingViolationJSONReader implements ParkingViolationReader {
     public List<ParkingViolation> readParkingViolations() {
         return null;
     }
+
+    @Override
+    public void logTimeAndFileName() {
+
+    }
 }
