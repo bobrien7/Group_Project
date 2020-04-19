@@ -20,10 +20,6 @@ public class UserInterface {
         //and executes the related command.
 
         //We gotta make sure we LOG to the logger the CURRENT TIME and the USER SELECTION
-
-
-
-
     }
 
 
