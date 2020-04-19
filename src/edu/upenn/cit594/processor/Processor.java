@@ -44,7 +44,7 @@ public class Processor {
 
     }
 
-    public Collection<ZipCode> getTotalFinesPerCapita(Collection<ZipCode> zipCodes, Collection<ParkingViolationReader> fines){
+    public Collection<ZipCode> getTotalFinesPerCapita(Collection<ZipCode> zipCodes, Collection<ParkingViolation> fines){
 
         //This method will return a collection of ZipCodes with the associated total fine per capita for that zip code
         //The User Interface will take this output, and do the required printing.
