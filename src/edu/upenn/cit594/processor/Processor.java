@@ -16,8 +16,9 @@ public class Processor {
     private PropertyValueCSVReader propertyReader;
 
     private Collection<ParkingViolation> parkingViolations; //TBD what data structure we're gonna use for this
+    private Collection<ZipCode> populationData; //TBD what data structure we're gonna use for this
     private Collection<Property> properties; //TBD what data structure we're gonna use for this
-    private Collection<ZipCode> zipCodes; //TBD what data structure we're gonna use for this
+
 
     public Processor(ParkingViolationReader parkingReader, PopulationDataReader populationReader, PropertyValueCSVReader propertyReader){
 
@@ -25,11 +26,18 @@ public class Processor {
         this.populationDataReader = populationReader;
         this.propertyReader = propertyReader;
 
+        parkingViolations = parkingReader.readParkingViolations();
+        populationData = populationReader.read();
+        properties = propertyReader.read();
+
     }
+
 
     public int getTotalPopulationForAllZipCodes(Collection<ZipCode> zipCodes){
 
         //this method corresponds to requirement 1 in the spec
+
+        //Incorporate memoization
 
         return 0;     //method should return the sum of populations from each zip code
 
@@ -42,6 +50,8 @@ public class Processor {
         //The User Interface will take this output, and do the required printing.
         //This method goes along with Requirement #2 in the spec
 
+        //Incorporate memoization
+
         return null;
     }
 
@@ -52,6 +62,8 @@ public class Processor {
         //This method will return a double that is the average market value for a home in the given zip code
 
         //You also have to LOG the current time and the given zipcode that was entered to the log file
+
+        //Incorporate memoization
 
         return 0;
     }
@@ -64,6 +76,8 @@ public class Processor {
 
         //You also have to LOG the current time and the given zipcode that was entered to the log file
 
+        //Incorporate memoization
+
         return 0;
     }
 
@@ -74,6 +88,8 @@ public class Processor {
 
         //You also have to LOG the current time and the given zipcode that was entered to the log file
 
+        //Incorporate memoization
+
         return 0;
     }
 
@@ -81,6 +97,8 @@ public class Processor {
 
         //This method goes along with requirement #6 in the spec
         //This method will perform some custom operation that we decide on
+
+        //Incorporate memoization
 
         return 0;
     }
