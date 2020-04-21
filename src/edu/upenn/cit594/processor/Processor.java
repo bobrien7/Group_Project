@@ -27,7 +27,7 @@ public class Processor {
         this.propertyReader = propertyReader;
 
         parkingViolations = parkingReader.readParkingViolations();
-        populationData = populationReader.read();
+//        populationData = populationReader.read();
         properties = propertyReader.read();
 
     }

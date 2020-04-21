@@ -3,14 +3,14 @@ package edu.upenn.cit594.data;
 public class ParkingViolation {
 
     private String timestamp;
-    private int fineAmount;
+    private double fineAmount;
     private String violationDescription;
     private int vehicleID;
     private String vehicleState;
     private int violationNumber;
     private int violationZipCode;
 
-    public ParkingViolation(String timestamp, int fineAmount, String violationDescription, int vehicleID, String vehicleState,
+    public ParkingViolation(String timestamp, double fineAmount, String violationDescription, int vehicleID, String vehicleState,
                             int violationNumber, int violationZipCode){
 
         this.timestamp = timestamp;
@@ -28,7 +28,7 @@ public class ParkingViolation {
         return timestamp;
     }
 
-    public int getFineAmount() {
+    public double getFineAmount() {
         return fineAmount;
     }
 

@@ -24,6 +24,7 @@ public class ParkingViolationJSONReader implements ParkingViolationReader {
     @Override
     public List<ParkingViolation> readParkingViolations() {
         ArrayList<ParkingViolation> parkingViolation = new ArrayList<ParkingViolation>();
+        int counter=0;
         JSONParser pvParser = new JSONParser();
         JSONArray pvJson = null;
         try {
@@ -53,9 +54,9 @@ public class ParkingViolationJSONReader implements ParkingViolationReader {
             }
 
             }
-//        for(ParkingViolation pv : parkingViolation){ // for testing
-//            System.out.println(pv.getViolationZipCode());
-//        }
+        for(ParkingViolation pv : parkingViolation){ // for testing
+            counter++;
+        }System.out.println(counter);
 
         return parkingViolation;
     }
@@ -64,10 +65,10 @@ public class ParkingViolationJSONReader implements ParkingViolationReader {
         public void logTimeAndFileName () {
 
         }
-//    public static void main(String[] args) { // for testing
-//        ParkingViolationJSONReader pvcsv = new ParkingViolationJSONReader("parking.json");
-//        pvcsv.readParkingViolations();
-//
-//    }
+    public static void main(String[] args) { // for testing
+        ParkingViolationJSONReader pvcsv = new ParkingViolationJSONReader("parking.json");
+        pvcsv.readParkingViolations();
+
+    }
 
 }
