@@ -23,6 +23,7 @@ public class ParkingViolationCSVReader implements ParkingViolationReader{
     @Override
     public List<ParkingViolation> readParkingViolations() {
         ArrayList<ParkingViolation> parkingViolation = new ArrayList<ParkingViolation>();
+//        int counter=0;
         try {
             Scanner scanner = new Scanner(new File(filename));
 
@@ -51,9 +52,11 @@ public class ParkingViolationCSVReader implements ParkingViolationReader{
 
             e.printStackTrace();
         }
-//        for(ParkingViolation pv : parkingViolation){
-//            System.out.println(pv.getTimestamp());
-//        }
+
+//        for(ParkingViolation pv : parkingViolation){ // for testing
+//            counter++;
+//
+//        }System.out.println(counter);
 
         return parkingViolation;
     }
@@ -64,7 +67,7 @@ public class ParkingViolationCSVReader implements ParkingViolationReader{
     public void logTimeAndFileName() {
 
     }
-//    public static void main(String[] args) {
+//    public static void main(String[] args) { //  for testing
 //        ParkingViolationCSVReader pvcsv = new ParkingViolationCSVReader("parking.csv");
 //        pvcsv.readParkingViolations();
 //
