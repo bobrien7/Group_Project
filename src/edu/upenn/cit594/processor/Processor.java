@@ -8,6 +8,7 @@ import edu.upenn.cit594.datamanagement.PopulationDataReader;
 import edu.upenn.cit594.datamanagement.PropertyValueCSVReader;
 
 import java.util.Collection;
+import java.util.HashMap;
 
 public class Processor {
 
@@ -16,7 +17,7 @@ public class Processor {
     private PropertyValueCSVReader propertyReader;
 
     private Collection<ParkingViolation> parkingViolations; //TBD what data structure we're gonna use for this
-    private Collection<ZipCode> populationData; //TBD what data structure we're gonna use for this
+    private HashMap<Integer, Integer> populationData; //TBD what data structure we're gonna use for this
     private Collection<Property> properties; //TBD what data structure we're gonna use for this
 
 
@@ -27,19 +28,23 @@ public class Processor {
         this.propertyReader = propertyReader;
 
         parkingViolations = parkingReader.readParkingViolations();
-//        populationData = populationReader.read();
+        populationData = populationReader.read();
         properties = propertyReader.read();
 
     }
 
 
-    public int getTotalPopulationForAllZipCodes(Collection<ZipCode> zipCodes){
+    public int getTotalPopulationForAllZipCodes(HashMap<Integer, Integer> zipCodes){
 
         //this method corresponds to requirement 1 in the spec
+        int sum=0;
 
+            for( int populationData : zipCodes.values() ){
+                sum+= populationData;
+            }
         //Incorporate memoization
 
-        return 0;     //method should return the sum of populations from each zip code
+        return sum;     //method should return the sum of populations from each zip code
 
 
     }
