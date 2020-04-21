@@ -26,7 +26,7 @@ public class ParkingViolationCSVReader implements ParkingViolationReader{
         try {
             Scanner scanner = new Scanner(new File(filename));
 
-            while(scanner.hasNextLine()) {
+            while (scanner.hasNextLine()) {
 
                 String violation = scanner.nextLine();
                 String[] violationData = violation.split(",");
@@ -35,32 +35,40 @@ public class ParkingViolationCSVReader implements ParkingViolationReader{
                 String violationDescription = violationData[2];
                 int vehicleID = Integer.parseInt(violationData[3]);
                 String vehicleState = violationData[4];
-                int violationNumber =Integer.parseInt(violationData[5]);
-                int violationZipCode =Integer.parseInt(violationData[6]);
+                int violationNumber = Integer.parseInt(violationData[5]);
+                if (violationData.length < 7) {
+                    //do nothing
+                } else {
+                    int violationZipCode = Integer.parseInt(violationData[6]);
 
-                parkingViolation.add(new ParkingViolation( timestamp, fineAmount, violationDescription, vehicleID, vehicleState, violationNumber, violationZipCode));
+
+                    parkingViolation.add(new ParkingViolation(timestamp, fineAmount, violationDescription, vehicleID, vehicleState, violationNumber, violationZipCode));
+                }
             }
+
             scanner.close();
         } catch (FileNotFoundException e) {
 
             e.printStackTrace();
         }
-        for(ParkingViolation pv : parkingViolation){
-            System.out.println(pv.getTimestamp());
-        }
+//        for(ParkingViolation pv : parkingViolation){
+//            System.out.println(pv.getTimestamp());
+//        }
 
         return parkingViolation;
     }
+
+
 
     @Override
     public void logTimeAndFileName() {
 
     }
-    public static void main(String[] args) {
-        ParkingViolationCSVReader pvcsv = new ParkingViolationCSVReader("parking.csv");
-        pvcsv.readParkingViolations();
-
-    }
+//    public static void main(String[] args) {
+//        ParkingViolationCSVReader pvcsv = new ParkingViolationCSVReader("parking.csv");
+//        pvcsv.readParkingViolations();
+//
+//    }
 
 
 }
