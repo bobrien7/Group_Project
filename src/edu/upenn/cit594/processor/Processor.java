@@ -7,6 +7,7 @@ import edu.upenn.cit594.datamanagement.ParkingViolationReader;
 import edu.upenn.cit594.datamanagement.PopulationDataReader;
 import edu.upenn.cit594.datamanagement.PropertyValueCSVReader;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 
@@ -17,7 +18,7 @@ public class Processor {
     private PropertyValueCSVReader propertyReader;
 
     private Collection<ParkingViolation> parkingViolations; //TBD what data structure we're gonna use for this
-    private HashMap<Integer, Integer> populationData; //TBD what data structure we're gonna use for this
+    private HashMap<Integer, Double> populationData; //TBD what data structure we're gonna use for this
     private Collection<Property> properties; //TBD what data structure we're gonna use for this
 
 
@@ -34,12 +35,12 @@ public class Processor {
     }
 
 
-    public int getTotalPopulationForAllZipCodes(HashMap<Integer, Integer> zipCodes){
+    public int getTotalPopulationForAllZipCodes(HashMap<Integer, Double> zipCodes){
 
         //this method corresponds to requirement 1 in the spec
         int sum=0;
 
-            for( int populationData : zipCodes.values() ){
+            for( double populationData : zipCodes.values() ){
                 sum+= populationData;
             }
         //Incorporate memoization
@@ -49,13 +50,30 @@ public class Processor {
 
     }
 
-    public Collection<ZipCode> getTotalFinesPerCapita(Collection<ZipCode> zipCodes, Collection<ParkingViolation> fines){
+    public Collection<ZipCode> getTotalFinesPerCapita(HashMap<Integer, Double> zipCodes, ArrayList<ParkingViolation> parkingViolation){
 
         //This method will return a collection of ZipCodes with the associated total fine per capita for that zip code
         //The User Interface will take this output, and do the required printing.
         //This method goes along with Requirement #2 in the spec
 
         //Incorporate memoization
+
+        double fineSum=0;
+        double population = 0;
+        for (ParkingViolation pv: parkingViolation){
+            for(Integer zipcode : zipCodes.keySet()) {
+                if (zipCodes.containsKey(pv.getViolationZipCode())) {
+                    fineSum+= pv.getFineAmount();
+                    population = zipCodes.get(zipcode);
+
+                }
+
+            }
+
+        }
+        double totalFinePerCapita = (fineSum / population);
+
+
 
         return null;
     }
