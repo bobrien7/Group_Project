@@ -33,7 +33,7 @@ public class PopulationDataReader {
 
             zipcodes.put(zipcode, population);
         }
-
+        scanner.close();
 
     } catch (FileNotFoundException e) {
         e.printStackTrace();

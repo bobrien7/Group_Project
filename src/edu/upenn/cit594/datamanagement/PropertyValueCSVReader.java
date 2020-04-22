@@ -1,5 +1,6 @@
 package edu.upenn.cit594.datamanagement;
 
+import edu.upenn.cit594.data.ParkingViolation;
 import edu.upenn.cit594.data.Property;
 
 import java.io.File;
@@ -16,8 +17,8 @@ public class PropertyValueCSVReader {
         this.filename = filename;
     }
 
-    public Collection<Property> read() {
-
+    public ArrayList<Property> read() {
+        ArrayList<Property> property = new ArrayList<Property>();
         int totalLivableAreaColumnNumber = 0;
         int marketValueColumnNumber = 0;
         int zipCodeColumnNumber = 0;
@@ -55,12 +56,13 @@ public class PropertyValueCSVReader {
                 counter++;
             }
 
-            System.out.println("Total Livable Area is in column: " + totalLivableAreaColumnNumber);
-            System.out.println("Market value is in column: " + marketValueColumnNumber);
-            System.out.println("ZipCode is in column: " + zipCodeColumnNumber);
-            System.out.println();
+//            System.out.println("Total Livable Area is in column: " + totalLivableAreaColumnNumber);
+//            System.out.println("Market value is in column: " + marketValueColumnNumber);
+//            System.out.println("ZipCode is in column: " + zipCodeColumnNumber);
+//            System.out.println();
 
         }
+
 
 
         while (scanner.hasNextLine()) {
@@ -123,37 +125,53 @@ public class PropertyValueCSVReader {
 
             //System.out.println(thisLine);
             String thisPropertiesMarketValueString = words.get(marketValueColumnNumber);
-            String thisPropertiesZipCode = words.get(zipCodeColumnNumber);
-            String thisPropertiesTotalArea = words.get(totalLivableAreaColumnNumber);
-            if(thisPropertiesMarketValueString.equals("")){
+            String thisPropertiesZipCodeString = words.get(zipCodeColumnNumber);
+            String thisPropertiesTotalAreaString = words.get(totalLivableAreaColumnNumber);
+            if(thisPropertiesMarketValueString.equals("")||thisPropertiesZipCodeString.equals("")||thisPropertiesTotalAreaString.equals("")){
+                scanner.nextLine();
 
                 //do nothing
             }
             else {
 
-                String address = "20' N WILLOWS AVE        ";
-                if (words.get(2).equals(address)) {
-                    System.out.println(thisLine);
-                    System.out.println(address);
-                    System.out.println("This property's market value is: " + thisPropertiesMarketValueString);
-                    System.out.println("This property's zip code is: " + thisPropertiesZipCode);
-                    System.out.println("This property's TLA is : " +thisPropertiesTotalArea);
-
-                }
+//                String address = "20' N WILLOWS AVE        ";
+//                if (words.get(2).equals(address)) {
+//                    System.out.println(thisLine);
+//                    System.out.println(address);
+//                    System.out.println("This property's market value is: " + thisPropertiesMarketValueString);
+//                    System.out.println("This property's zip code is: " + thisPropertiesZipCode);
+//                    System.out.println("This property's TLA is : " +thisPropertiesTotalArea);
+//
+//                }
 
                 Double thisPropertiesMarketValue = Double.parseDouble(thisPropertiesMarketValueString);
+                String zipCodeSubString = "";
+                if (thisPropertiesZipCodeString.length()>5){ //trims the zipcode to only first 5 digits
+                    zipCodeSubString = thisPropertiesZipCodeString.substring(0,5);
+                    Integer thisPropertiesZipCode = Integer.parseInt(zipCodeSubString);
 
+                }
+                Integer thisPropertiesZipCode = Integer.parseInt(zipCodeSubString);
+
+                Integer thisPropertiesTotalArea= Integer.parseInt(thisPropertiesTotalAreaString);
+
+                property.add(new Property(thisPropertiesMarketValue,thisPropertiesZipCode, thisPropertiesTotalArea));
             }
 
+            for( Property prop: property){ // for testing
+                System.out.println(prop.getMarketValue());
+                System.out.println(prop.getZipCode());
+                System.out.println(prop.getTotalLivableArea());
+            }
         }
 
         scanner.close();
-            return null;
+            return property;
         }
 
-        public static void main (String[]args){
+        public static void main (String[]args){ // for testing
 
-            PropertyValueCSVReader reader = new PropertyValueCSVReader("properties_large.csv");
+            PropertyValueCSVReader reader = new PropertyValueCSVReader("properties.csv");
             reader.read();
         }
 
