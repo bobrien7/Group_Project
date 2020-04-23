@@ -19,8 +19,8 @@ public class PopulationDataReader {
     }
 
 
-    public HashMap<Integer, Double> read() {
-        HashMap<Integer, Double> zipcodes = new HashMap<Integer, Double>();
+    public HashMap<ZipCode, Double> read() {
+        HashMap<ZipCode, Double> zipcodes = new HashMap<ZipCode, Double>();
 //        int counter=0;
         try {
             Scanner scanner = new Scanner(new File(filename));
@@ -31,7 +31,9 @@ public class PopulationDataReader {
             int zipcode = Integer.parseInt(lineData[0]);
             double population = Integer.parseInt(lineData[1]);
 
-            zipcodes.put(zipcode, population);
+
+
+            zipcodes.put(new ZipCode(zipcode, population), population);
         }
         scanner.close();
 

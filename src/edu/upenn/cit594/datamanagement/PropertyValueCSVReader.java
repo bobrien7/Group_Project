@@ -155,7 +155,7 @@ public class PropertyValueCSVReader {
 
                 Integer thisPropertiesTotalArea= Integer.parseInt(thisPropertiesTotalAreaString);
 
-                property.add(new Property(thisPropertiesMarketValue,thisPropertiesZipCode, thisPropertiesTotalArea));
+                property.add(new Property(thisPropertiesMarketValue,thisPropertiesZipCode,thisPropertiesTotalArea));
             }
 
             for( Property prop: property){ // for testing
