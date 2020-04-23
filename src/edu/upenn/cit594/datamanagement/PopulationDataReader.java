@@ -5,10 +5,7 @@ import edu.upenn.cit594.data.ZipCode;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 public class PopulationDataReader {
 
@@ -19,25 +16,26 @@ public class PopulationDataReader {
     }
 
 
-    public HashMap<ZipCode, Double> read() {
+    public ArrayList<ZipCode> read() {
         HashMap<ZipCode, Double> zipcodes = new HashMap<ZipCode, Double>();
+        ArrayList<ZipCode> theZipCodes = new ArrayList<>();
 //        int counter=0;
         try {
             Scanner scanner = new Scanner(new File(filename));
 
-        while(scanner.hasNextLine()){
-            String data = scanner.nextLine();
-            String[] lineData = data.split(" ");
-            int zipcode = Integer.parseInt(lineData[0]);
-            double population = Integer.parseInt(lineData[1]);
+            while (scanner.hasNextLine()) {
+                String data = scanner.nextLine();
+                String[] lineData = data.split(" ");
+                int zipcode = Integer.parseInt(lineData[0]);
+                double population = Integer.parseInt(lineData[1]);
 
 
+                zipcodes.put(new ZipCode(zipcode, population), population);
+                theZipCodes.add(new ZipCode(zipcode, population));
+            }
+            scanner.close();
 
-            zipcodes.put(new ZipCode(zipcode, population), population);
-        }
-        scanner.close();
-
-    } catch (FileNotFoundException e) {
+        } catch (FileNotFoundException e) {
         e.printStackTrace();
     }
 //        for(int pd : populationData.values() ) { // for testing
@@ -46,7 +44,7 @@ public class PopulationDataReader {
 //        }
 //        }System.out.println(counter);
 
-        return zipcodes;
+        return theZipCodes;
     }
 
 //    public static void main(String[] args) { //  for testing

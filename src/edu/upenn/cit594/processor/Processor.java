@@ -7,6 +7,7 @@ import edu.upenn.cit594.datamanagement.ParkingViolationReader;
 import edu.upenn.cit594.datamanagement.PopulationDataReader;
 import edu.upenn.cit594.datamanagement.PropertyValueCSVReader;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -18,11 +19,11 @@ public class Processor {
     private PropertyValueCSVReader propertyReader;
 
     private Collection<ParkingViolation> parkingViolations; //TBD what data structure we're gonna use for this
-    private HashMap<ZipCode, Double> populationData; //TBD what data structure we're gonna use for this
-    private Collection<Property> properties; //TBD what data structure we're gonna use for this
+    private ArrayList<ZipCode> populationData; //TBD what data structure we're gonna use for this
+    private ArrayList<Property> properties; //TBD what data structure we're gonna use for this
 
 
-    public Processor(ParkingViolationReader parkingReader, PopulationDataReader populationReader, PropertyValueCSVReader propertyReader){
+    public Processor(ParkingViolationReader parkingReader, PopulationDataReader populationReader, PropertyValueCSVReader propertyReader) {
 
         this.parkingReader = parkingReader;
         this.populationDataReader = populationReader;
@@ -50,7 +51,7 @@ public class Processor {
 
     }
 
-    public static Collection<ZipCode> getTotalFinesPerCapita(HashMap<ZipCode, Double> zipCodes, ArrayList<ParkingViolation> parkingViolation){
+    public static Collection<ZipCode> getTotalFinesPerCapita(ArrayList<ParkingViolation> parkingViolation, ArrayList<ZipCode> theZipCodes) {
 
         //This method will return a collection of ZipCodes with the associated total fine per capita for that zip code
         //The User Interface will take this output, and do the required printing.
@@ -58,38 +59,34 @@ public class Processor {
 
         //Incorporate memoization
 
-        HashMap<Integer, ZipCode> totalFinesForEachZipcode = new HashMap<>();
-            for (ZipCode location :zipCodes.keySet()){
-                totalFinesForEachZipcode.put(location.getZipcode(), location);
 
-            }
-            double fineSum=0;
-            for (ParkingViolation pv: parkingViolation){
+        double fineSum = 0;
+        for (ParkingViolation pv : parkingViolation) {
 
-            if(zipCodes.containsKey(pv.getViolationZipCode())){
+            for (ZipCode zipCode : theZipCodes) {
 
-                fineSum= pv.getFineAmount();
-                double newFinesTotal = totalFinesForEachZipcode.get(pv.getViolationZipCode()).getTotalParkingFinesAmount()+ fineSum;
-                totalFinesForEachZipcode.get(pv.getViolationZipCode()).setTotalParkingFinesAmount(newFinesTotal);
+                if (zipCode.getZipcode() == pv.getViolationZipCode()) {
+
+                    fineSum = pv.getFineAmount();
+                    zipCode.setTotalParkingFinesAmount(zipCode.getTotalParkingFinesAmount() + fineSum);
 
                 }
 
             }
-            for(Integer eachZipcode : totalFinesForEachZipcode.keySet()){
-                double totalSum = totalFinesForEachZipcode.get(eachZipcode).getTotalParkingFinesAmount();
-                double finesPerCapita = totalSum/totalFinesForEachZipcode.get(eachZipcode).getPopulation();
-                totalFinesForEachZipcode.get(eachZipcode).setTotalParkingFinesAmount(finesPerCapita);
-                System.out.println( totalFinesForEachZipcode.get(eachZipcode).getZipcode());
-                System.out.println( totalFinesForEachZipcode.get(eachZipcode).getTotalParkingFinesAmount());
-            }
+        }
 
 
+        for (ZipCode zipCode : theZipCodes) {
+            double totalSum = zipCode.getTotalParkingFinesAmount();
+            double finesPerCapita = totalSum / zipCode.getPopulation();
+            zipCode.setFinesPerCapita(finesPerCapita);
+            System.out.println(zipCode.getZipcode());
+            System.out.println(zipCode.getFinesPerCapita());
+
+        }
 
 
-
-
-
-        return null;
+        return theZipCodes;
     }
 
     public double getAverageMarketValue(int zipcode){
@@ -141,8 +138,42 @@ public class Processor {
     }
 
 
+    public static void main(String[] args) {
 
-    public static void main (String[]args){
+        ZipCode zipCode1 = new ZipCode(11111, 10);
+        ZipCode zipCode2 = new ZipCode(22222, 50);
+        ZipCode zipCode3 = new ZipCode(33333, 100);
+
+        ParkingViolation ticket1 = new ParkingViolation("timestamp", 100, "speeding", 0, "NJ",
+                1, 11111);
+
+        ParkingViolation ticket2 = new ParkingViolation("timestamp", 100, "speeding", 0, "NJ",
+                1, 11111);
+
+        ParkingViolation ticket3 = new ParkingViolation("timestamp", 0, "speeding", 0, "NJ",
+                1, 22222);
+
+        ParkingViolation ticket4 = new ParkingViolation("timestamp", 100, "speeding", 0, "NJ",
+                1, 22222);
+
+
+        HashMap<ZipCode, Double> zipCodes = new HashMap<>();
+        zipCodes.put(zipCode1, 11111.0);
+        zipCodes.put(zipCode2, 22222.0);
+        zipCodes.put(zipCode3, 33333.0);
+
+        ArrayList<ZipCode> theZipCodes = new ArrayList<>();
+        theZipCodes.add(zipCode1);
+        theZipCodes.add(zipCode2);
+        theZipCodes.add(zipCode3);
+
+        ArrayList<ParkingViolation> parkingViolation = new ArrayList<>();
+        parkingViolation.add(ticket1);
+        parkingViolation.add(ticket2);
+        parkingViolation.add(ticket3);
+        parkingViolation.add(ticket4);
+
+        getTotalFinesPerCapita(parkingViolation, theZipCodes);
 
 
     }
