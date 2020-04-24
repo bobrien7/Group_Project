@@ -4,9 +4,9 @@ public class Property {
 
     private double marketValue;
     private int zipCode;
-    private int totalLivableArea;
+    private double totalLivableArea;
 
-    public Property(double marketValue, int zipCode, int totalLivableArea){
+    public Property(double marketValue, int zipCode, double totalLivableArea) {
 
         this.marketValue = marketValue;
         this.zipCode = zipCode;
@@ -21,7 +21,7 @@ public class Property {
         return zipCode;
     }
 
-    public int getTotalLivableArea() {
+    public double getTotalLivableArea() {
         return totalLivableArea;
     }
 }

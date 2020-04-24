@@ -50,16 +50,18 @@ public class UserInterface {
             System.out.println("Enter 5 for total market value per capita. ");
             System.out.println("Enter 6 for something. ");
             if (in.hasNextInt()) {
-                int choice = in.nextInt();
-
-                if (choice > 6 || choice < 0) {
+                String stringChoice = in.next();
+                int choice = Integer.parseInt(stringChoice);
+                if (stringChoice.length() != 1) {
+                    System.out.println("2Not a valid selection, please choose again");
+                } else if (choice > 6 || choice < 0) {
                     System.out.println("Not a valid selection, please choose again");
 
                 }
 
 
                 // if not a number, print line
-                if (choice == 0) { //end program
+                else if (choice == 0) { //end program
                     System.exit(0);
                 } else if (choice == 1) {
                     doTotalPopulationForAllZipCodes();
@@ -74,12 +76,12 @@ public class UserInterface {
 
                 } else if (choice == 5) {
 
-                    System.out.print("Please enter a zipcode:");
+                    System.out.print("Please enter a zipcode: ");
                     Boolean indicator1 = true;
                     while ( indicator1){
                         int zip = in.nextInt();
                         if(zip > 99999  || zip <9999){
-                            System.out.print("Please enter a valid zipcode");
+                            System.out.print("Please enter a valid zipcode: ");
 
 
                         }else {
@@ -165,7 +167,7 @@ public class UserInterface {
 
         PopulationDataReader populationReader = new PopulationDataReader("population.txt");
         ParkingViolationReader parkingReader = new ParkingViolationCSVReader("parking.csv");
-        PropertyValueCSVReader propertyReader = new PropertyValueCSVReader("properties.csv");
+        PropertyValueCSVReader propertyReader = new PropertyValueCSVReader("properties_1.csv");
 
         Processor processor = new Processor(parkingReader, populationReader, propertyReader);
         UserInterface ui = new UserInterface(processor);

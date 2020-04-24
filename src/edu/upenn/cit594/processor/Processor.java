@@ -1,8 +1,6 @@
 package edu.upenn.cit594.processor;
 
-import edu.upenn.cit594.data.ParkingViolation;
-import edu.upenn.cit594.data.Property;
-import edu.upenn.cit594.data.ZipCode;
+import edu.upenn.cit594.data.*;
 import edu.upenn.cit594.datamanagement.ParkingViolationCSVReader;
 import edu.upenn.cit594.datamanagement.ParkingViolationReader;
 import edu.upenn.cit594.datamanagement.PopulationDataReader;
@@ -28,6 +26,7 @@ public class Processor {
     //these are our memoization hashmaps
     private HashMap<String, Integer> method1Memo = new HashMap<>();
     HashMap<Integer, Double> method2Memo = new HashMap<>();
+    HashMap<Integer, Double> method3Memo = new HashMap<>();
 
 
     HashMap<Integer, Double> method5Memo = new HashMap<>();
@@ -114,7 +113,7 @@ public class Processor {
         }
     }
 
-    public double getAverageMarketValue(int zipcode){
+    public double getAverageMarketValue(int zipcode) {
         //From the Spec we have to use the STRATEGY design pattern to link this method with method #4
 
         //This method goes along with Requirement #3 in the spec
@@ -124,7 +123,12 @@ public class Processor {
 
         //Incorporate memoization
 
-        return 0;
+
+        PropertyDataAverager dataAverager = new MarketValueDataGrabber();
+        PropertyAverager averager = new PropertyAverager();
+        double answer = averager.getAverageValue(properties, dataAverager);
+
+        return answer;
     }
 
     public double getAverageTotalLivableArea(int zipcode){

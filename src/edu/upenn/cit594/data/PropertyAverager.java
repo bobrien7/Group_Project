@@ -4,8 +4,18 @@ import java.util.ArrayList;
 
 public class PropertyAverager {
 
-    public double getAverageValue(ArrayList<Property> properties, Property theProperty, PropertyDataAverager theAverager) {
+    public double getAverageValue(ArrayList<Property> properties, PropertyDataAverager theAverager) {
 
-        return 0.0;
+        double sum = 0;
+        double count = 0;
+        for (Property theProperty : properties) {
+
+            double thisAdd = theAverager.getPropertyDataOfInterest(theProperty);
+            sum = sum + thisAdd;
+            count = count + 1;
+        }
+
+
+        return sum / count;
     }
 }

@@ -66,8 +66,11 @@ public class PropertyValueCSVReader {
 
 
         while (scanner.hasNextLine()) {
+            //scanner.hasNextLine()
+
             ArrayList<String> words = new ArrayList<>();
             String thisLine = scanner.nextLine();
+
             String[] thisLineSplit = thisLine.split(",");
 
             boolean indicator = true;
@@ -75,7 +78,7 @@ public class PropertyValueCSVReader {
 
             int extraWordCount = 0;
             for (String word : thisLineSplit) {
-
+                //System.out.print(word + "//");
                 if(extraWordCount != 0){
 
                     extraWordCount = extraWordCount - 1;
@@ -90,7 +93,7 @@ public class PropertyValueCSVReader {
 
                 else if (word.charAt(0) == '\"') {
 
-                    if (word.charAt(word.length() - 1) == '\"') {
+                    if (word.charAt(word.length() - 1) == '\"' && word.length() > 1) {
 
                         words.add(word);
 
@@ -113,6 +116,7 @@ public class PropertyValueCSVReader {
                             }
 
                         }
+                        indicator = true;
                     }
 
                 } else if (word.charAt(word.length() - 1) == '\"') {
@@ -122,6 +126,7 @@ public class PropertyValueCSVReader {
                 }
                 count5++;
             }
+            //System.out.println();
 
             //System.out.println(thisLine);
             String thisPropertiesMarketValueString = words.get(marketValueColumnNumber);
@@ -133,37 +138,39 @@ public class PropertyValueCSVReader {
                 //do nothing
             }
             else {
-
-//                String address = "20' N WILLOWS AVE        ";
-//                if (words.get(2).equals(address)) {
-//                    System.out.println(thisLine);
-//                    System.out.println(address);
-//                    System.out.println("This property's market value is: " + thisPropertiesMarketValueString);
-//                    System.out.println("This property's zip code is: " + thisPropertiesZipCode);
-//                    System.out.println("This property's TLA is : " +thisPropertiesTotalArea);
-//
+//                for(String word : words){
+//                    System.out.print(word + "//");
 //                }
 
                 Double thisPropertiesMarketValue = Double.parseDouble(thisPropertiesMarketValueString);
                 String zipCodeSubString = "";
                 int thisPropertiesZipCode;
-                if (thisPropertiesZipCodeString.length() > 5) { //trims the zipcode to only first 5 digits
+                //System.out.println();
+                //System.out.println(words.size());
+                Double thisPropertiesTotalArea = Double.parseDouble(thisPropertiesTotalAreaString);
+
+                thisPropertiesZipCodeString = thisPropertiesZipCodeString.replace(" ", "");
+
+                if (thisPropertiesZipCodeString.length() < 5) {
+
+                    // do nothing
+
+                } else if (thisPropertiesZipCodeString.length() > 5) { //trims the zipcode to only first 5 digits
+
+                    //System.out.println(zipCodeSubString);
                     zipCodeSubString = thisPropertiesZipCodeString.substring(0, 5);
                     thisPropertiesZipCode = Integer.parseInt(zipCodeSubString);
+
+                    property.add(new Property(thisPropertiesMarketValue, thisPropertiesZipCode, thisPropertiesTotalArea));
                 } else {
                     thisPropertiesZipCode = Integer.parseInt(thisPropertiesZipCodeString);
+                    property.add(new Property(thisPropertiesMarketValue, thisPropertiesZipCode, thisPropertiesTotalArea));
                 }
 
-                Integer thisPropertiesTotalArea= Integer.parseInt(thisPropertiesTotalAreaString);
-
-                property.add(new Property(thisPropertiesMarketValue,thisPropertiesZipCode,thisPropertiesTotalArea));
             }
 
-            for( Property prop: property){ // for testing
-                //System.out.println(prop.getMarketValue());
-                //System.out.println(prop.getZipCode());
-                //System.out.println(prop.getTotalLivableArea());
-            }
+
+            //System.out.println();
         }
 
         scanner.close();
@@ -172,7 +179,7 @@ public class PropertyValueCSVReader {
 
         public static void main (String[]args){ // for testing
 
-            PropertyValueCSVReader reader = new PropertyValueCSVReader("properties.csv");
+            PropertyValueCSVReader reader = new PropertyValueCSVReader("properties_large.csv");
             reader.read();
         }
 
