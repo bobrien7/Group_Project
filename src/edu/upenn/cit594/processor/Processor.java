@@ -36,13 +36,13 @@ public class Processor {
     }
 
 
-    public int getTotalPopulationForAllZipCodes(HashMap<Integer, Double> zipCodes){
+    public int getTotalPopulationForAllZipCodes(ArrayList<ZipCode>zipCodes){
 
         //this method corresponds to requirement 1 in the spec
         int sum=0;
 
-            for( double populationData : zipCodes.values() ){
-                sum+= populationData;
+            for( ZipCode populationData : zipCodes ){
+                sum+= populationData.getPopulation();
             }
         //Incorporate memoization
 
