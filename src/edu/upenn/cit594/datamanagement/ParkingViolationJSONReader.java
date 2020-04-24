@@ -22,9 +22,9 @@ public class ParkingViolationJSONReader implements ParkingViolationReader {
     }
 
     @Override
-    public List<ParkingViolation> readParkingViolations() {
+    public ArrayList<ParkingViolation> readParkingViolations() {
         ArrayList<ParkingViolation> parkingViolation = new ArrayList<ParkingViolation>();
-        int counter=0;
+        int counter = 0;
         JSONParser pvParser = new JSONParser();
         JSONArray pvJson = null;
         try {

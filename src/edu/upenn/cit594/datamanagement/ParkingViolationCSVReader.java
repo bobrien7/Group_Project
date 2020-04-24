@@ -18,12 +18,10 @@ public class ParkingViolationCSVReader implements ParkingViolationReader{ //
     }
 
 
-
-
     @Override
-    public List<ParkingViolation> readParkingViolations() {
+    public ArrayList<ParkingViolation> readParkingViolations() {
         ArrayList<ParkingViolation> parkingViolation = new ArrayList<ParkingViolation>();
-        int counter=0;
+        int counter = 0;
         try {
             Scanner scanner = new Scanner(new File(filename));
 
@@ -56,7 +54,7 @@ public class ParkingViolationCSVReader implements ParkingViolationReader{ //
         for(ParkingViolation pv : parkingViolation){ // for testing
             counter++;
 
-        }System.out.println(counter);
+        }
 
         return parkingViolation;
     }

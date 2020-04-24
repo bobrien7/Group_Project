@@ -159,9 +159,9 @@ public class PropertyValueCSVReader {
             }
 
             for( Property prop: property){ // for testing
-                System.out.println(prop.getMarketValue());
-                System.out.println(prop.getZipCode());
-                System.out.println(prop.getTotalLivableArea());
+                //System.out.println(prop.getMarketValue());
+                //System.out.println(prop.getZipCode());
+                //System.out.println(prop.getTotalLivableArea());
             }
         }
 
