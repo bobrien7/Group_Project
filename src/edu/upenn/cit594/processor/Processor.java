@@ -27,6 +27,7 @@ public class Processor {
     private HashMap<String, Integer> method1Memo = new HashMap<>();
     HashMap<Integer, Double> method2Memo = new HashMap<>();
     HashMap<Integer, Double> method3Memo = new HashMap<>();
+    HashMap<Integer, Double> method4Memo = new HashMap<>();
 
 
     HashMap<Integer, Double> method5Memo = new HashMap<>();
@@ -122,16 +123,21 @@ public class Processor {
         //You also have to LOG the current time and the given zipcode that was entered to the log file
 
         //Incorporate memoization
+        if (method3Memo.containsKey(zipcode)) {
+            System.out.println("Used memoization");
+            return method3Memo.get(zipcode);
+        } else {
 
-
-        PropertyDataAverager dataAverager = new MarketValueDataGrabber();
-        PropertyAverager averager = new PropertyAverager();
-        double answer = averager.getAverageValue(properties, dataAverager);
-
-        return answer;
+            PropertyDataAverager dataAverager = new MarketValueDataGrabber();
+            PropertyAverager averager = new PropertyAverager();
+            double answer = averager.getAverageValue(properties, dataAverager);
+            System.out.println("No memoization");
+            method3Memo.put(zipcode, answer);
+            return answer;
+        }
     }
 
-    public double getAverageTotalLivableArea(int zipcode){
+    public double getAverageTotalLivableArea(int zipcode) {
         //From the Spec we have to use the STRATEGY design pattern to link this method with method #3
 
         //This method goes along with Requirement #4 in the spec
@@ -140,8 +146,18 @@ public class Processor {
         //You also have to LOG the current time and the given zipcode that was entered to the log file
 
         //Incorporate memoization
+        if (method4Memo.containsKey(zipcode)) {
+            System.out.println("Used memoization");
+            return method4Memo.get(zipcode);
+        } else {
+            PropertyDataAverager dataAverager = new TotalLivableAreaDataGrabber();
+            PropertyAverager averager = new PropertyAverager();
+            double answer = averager.getAverageValue(properties, dataAverager);
+            System.out.println("No memoization");
+            method4Memo.put(zipcode, answer);
+            return answer;
+        }
 
-        return 0;
     }
 
     public double getResidentialMarketValuePerCapita(int zipcode) {
