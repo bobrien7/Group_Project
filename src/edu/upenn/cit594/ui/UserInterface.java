@@ -53,7 +53,7 @@ public class UserInterface {
                 String stringChoice = in.next();
                 int choice = Integer.parseInt(stringChoice);
                 if (stringChoice.length() != 1) {
-                    System.out.println("2Not a valid selection, please choose again");
+                    System.out.println("Not a valid selection, please choose again");
                 } else if (choice > 6 || choice < 0) {
                     System.out.println("Not a valid selection, please choose again");
 
@@ -70,15 +70,43 @@ public class UserInterface {
                     doGetFinesPerCapita();
 
                 } else if (choice == 3) {
+                    System.out.print("Please enter a zipcode: ");
+                    Boolean indicator1 = true;
+                    while(indicator1){
+                        int zip = in.nextInt();
+                        if(zip > 99999  || zip <9999){
+                            System.out.print("Please enter a valid zipcode: ");
+
+
+                        }else {
+                            doGetAverageMarketValue(zip);
+                            indicator1 = false;
+
+                        }
+                    }
 
 
                 } else if (choice == 4) {
+                    System.out.print("Please enter a zipcode: ");
+                    Boolean indicator2 = true;
+                    while(indicator2){
+                        int zip = in.nextInt();
+                        if(zip > 99999  || zip <9999){
+                            System.out.print("Please enter a valid zipcode: ");
+
+
+                        }else {
+                            doGetAverageMarketValue(zip);
+                            indicator2 = false;
+
+                        }
+                    }
 
                 } else if (choice == 5) {
 
                     System.out.print("Please enter a zipcode: ");
-                    Boolean indicator1 = true;
-                    while ( indicator1){
+                    Boolean indicator3 = true;
+                    while ( indicator3){
                         int zip = in.nextInt();
                         if(zip > 99999  || zip <9999){
                             System.out.print("Please enter a valid zipcode: ");
@@ -87,7 +115,7 @@ public class UserInterface {
                         }else {
 
                             doGetResidentialMarketValuePerCapita(zip);
-                            indicator1 = false;
+                            indicator3 = false;
 
 
 
@@ -112,11 +140,11 @@ public class UserInterface {
         in.close();
     }
 
-    protected void doTotalPopulationForAllZipCodes() {
+        protected void doTotalPopulationForAllZipCodes() {
         System.out.println(processor.getTotalPopulationForAllZipCodes());
     }
 
-    protected void doGetFinesPerCapita() {
+        protected void doGetFinesPerCapita() {
         HashMap<Integer, Double> finesPerCapita = processor.getTotalFinesPerCapita();
         ArrayList<ZipCode> allZipCodes = processor.getPopulationData();
 
@@ -138,13 +166,29 @@ public class UserInterface {
 
         }
     }
+        protected void doGetAverageMarketValue(int zip){
+
+
+        Double averageMarketValue = processor.getAverageMarketValue(zip);
+            String pattern = "###0.0000";
+            DecimalFormat df = new DecimalFormat(pattern);
+
+
+            System.out.println( df.format(averageMarketValue));
+
+        }
+        protected void doAverageTotalLivableArea(int zip){
+
+
+        }
+
         protected void doGetResidentialMarketValuePerCapita(int zip){
 
 
              Double residentialMarketValue = processor.getResidentialMarketValuePerCapita(zip);
 
 
-                    String pattern = "###0.";
+                    String pattern = "###0";
                     DecimalFormat df = new DecimalFormat(pattern);
 
 
@@ -167,7 +211,7 @@ public class UserInterface {
 
         PopulationDataReader populationReader = new PopulationDataReader("population.txt");
         ParkingViolationReader parkingReader = new ParkingViolationCSVReader("parking.csv");
-        PropertyValueCSVReader propertyReader = new PropertyValueCSVReader("properties_1.csv");
+        PropertyValueCSVReader propertyReader = new PropertyValueCSVReader("properties.csv");
 
         Processor processor = new Processor(parkingReader, populationReader, propertyReader);
         UserInterface ui = new UserInterface(processor);
