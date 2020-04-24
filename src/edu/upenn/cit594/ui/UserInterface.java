@@ -23,8 +23,15 @@ public class UserInterface {
 
         //this method will start up the program
         System.out.println("Starting program");
-        System.out.println("Enter 0 to end the program, 1 to get total population, 2 to get parking violation per capita by zipcode" +
-                ", 3 for average market value for a zipcode, 4 for average livable area for a zipcode, 5 for total market value per capita ");
+        System.out.println("Enter 0 to end the program. " );
+        System.out.println("Enter 1 to get total population. " );
+        System.out.println("Enter 2 to get parking violation per capita by zipcode.");
+        System.out.println("Enter 3 for average market value for a zipcode. ");
+        System.out.println("Enter 4 for average livable area for a zipcode.");
+        System.out.println("Enter 5 for total market value per capita. ");
+        System.out.println("Enter 6 for something. ");
+
+
         while (in.hasNextLine()) {
             if (in.hasNextInt()) {
                 int choice = in.nextInt();
@@ -67,8 +74,12 @@ public class UserInterface {
         in.close();
     }
 
-        protected  void doTotalPopulationForAllZipCodes() {
+        protected void doTotalPopulationForAllZipCodes() {
             System.out.println(processor.getTotalPopulationForAllZipCodes());
+        }
+
+        protected void doGetFinesPerCapita(){
+
         }
 
 
