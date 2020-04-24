@@ -28,16 +28,27 @@ public class UserInterface {
 
         //this method will start up the program
         System.out.println("Starting program");
-        System.out.println("Enter 0 to end the program. " );
-        System.out.println("Enter 1 to get total population. " );
-        System.out.println("Enter 2 to get parking violation per capita by zipcode.");
-        System.out.println("Enter 3 for average market value for a zipcode. ");
-        System.out.println("Enter 4 for average livable area for a zipcode.");
-        System.out.println("Enter 5 for total market value per capita. ");
-        System.out.println("Enter 6 for something. ");
+//        System.out.println("Enter 0 to end the program. " );
+//        System.out.println("Enter 1 to get total population. " );
+//        System.out.println("Enter 2 to get parking violation per capita by zipcode.");
+//        System.out.println("Enter 3 for average market value for a zipcode. ");
+//        System.out.println("Enter 4 for average livable area for a zipcode.");
+//        System.out.println("Enter 5 for total market value per capita. ");
+//        System.out.println("Enter 6 for something. ");
+
+        Boolean indicator = true;
 
 
-        while (in.hasNextLine()) {
+        while (indicator) {
+
+            System.out.println("");
+            System.out.println("Enter 0 to end the program. " );
+            System.out.println("Enter 1 to get total population. " );
+            System.out.println("Enter 2 to get parking violation per capita by zipcode.");
+            System.out.println("Enter 3 for average market value for a zipcode. ");
+            System.out.println("Enter 4 for average livable area for a zipcode.");
+            System.out.println("Enter 5 for total market value per capita. ");
+            System.out.println("Enter 6 for something. ");
             if (in.hasNextInt()) {
                 int choice = in.nextInt();
 
@@ -58,9 +69,28 @@ public class UserInterface {
 
                 } else if (choice == 3) {
 
+
                 } else if (choice == 4) {
 
                 } else if (choice == 5) {
+
+                    System.out.print("Please enter a zipcode:");
+                    Boolean indicator1 = true;
+                    while ( indicator1){
+                        int zip = in.nextInt();
+                        if(zip > 99999  || zip <9999){
+                            System.out.print("Please enter a valid zipcode");
+
+
+                        }else {
+
+                            doGetResidentialMarketValuePerCapita(zip);
+                            indicator1 = false;
+
+
+
+                        }
+                    }
 
                 } else if (choice == 6) {
 
@@ -101,8 +131,28 @@ public class UserInterface {
 
             }
 
+
+
+
         }
     }
+        protected void doGetResidentialMarketValuePerCapita(int zip){
+
+
+             Double residentialMarketValue = processor.getResidentialMarketValuePerCapita(zip);
+
+
+                    String pattern = "###0.";
+                    DecimalFormat df = new DecimalFormat(pattern);
+
+
+                    System.out.println( df.format(residentialMarketValue));
+
+
+
+            }
+
+
 
 
 
@@ -121,6 +171,7 @@ public class UserInterface {
         UserInterface ui = new UserInterface(processor);
         ui.start();
     }
+
 
 
 }
