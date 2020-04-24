@@ -146,12 +146,13 @@ public class PropertyValueCSVReader {
 
                 Double thisPropertiesMarketValue = Double.parseDouble(thisPropertiesMarketValueString);
                 String zipCodeSubString = "";
-                if (thisPropertiesZipCodeString.length()>5){ //trims the zipcode to only first 5 digits
-                    zipCodeSubString = thisPropertiesZipCodeString.substring(0,5);
-                    Integer thisPropertiesZipCode = Integer.parseInt(zipCodeSubString);
-
+                int thisPropertiesZipCode;
+                if (thisPropertiesZipCodeString.length() > 5) { //trims the zipcode to only first 5 digits
+                    zipCodeSubString = thisPropertiesZipCodeString.substring(0, 5);
+                    thisPropertiesZipCode = Integer.parseInt(zipCodeSubString);
+                } else {
+                    thisPropertiesZipCode = Integer.parseInt(thisPropertiesZipCodeString);
                 }
-                Integer thisPropertiesZipCode = Integer.parseInt(zipCodeSubString);
 
                 Integer thisPropertiesTotalArea= Integer.parseInt(thisPropertiesTotalAreaString);
 

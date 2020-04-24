@@ -30,6 +30,9 @@ public class Processor {
     HashMap<Integer, Double> method2Memo = new HashMap<>();
 
 
+    HashMap<Integer, Double> method5Memo = new HashMap<>();
+
+
     public Processor(ParkingViolationReader parkingReader, PopulationDataReader populationReader, PropertyValueCSVReader propertyReader) {
 
         this.parkingReader = parkingReader;
@@ -73,7 +76,7 @@ public class Processor {
 
         //Incorporate memoization
         if (!method2Memo.isEmpty()) {
-            System.out.println("utilized memoization");
+
             return method2Memo;
         } else {
             double fineSum = 0;
@@ -137,7 +140,7 @@ public class Processor {
         return 0;
     }
 
-    public double getResidentialMarketValuePerCapita(int zipcode){
+    public double getResidentialMarketValuePerCapita(int zipcode) {
 
         //This method goes along with Requirement #5 in the spec
         //This method will return a double that is the total residential market value per capita for the given zip code
@@ -146,15 +149,71 @@ public class Processor {
 
         //Incorporate memoization
 
-        return 0;
+        if (zipcode < 9999) {
+            return 0.0;
+        }
+
+        if (method5Memo.containsKey(zipcode)) {
+
+            System.out.println("Memoization");
+            return method5Memo.get(zipcode);
+
+        } else {
+            double marketValueSum = 0;
+
+            for (Property property : properties) {
+
+                for (ZipCode zipCode : populationData) {
+
+                    if (zipCode.getZipcode() == property.getZipCode()) {
+
+                        marketValueSum = property.getMarketValue();
+
+                        zipCode.setTotalMarketValueAmount(zipCode.getTotalMarketValueAmount() + marketValueSum);
+
+                    }
+
+                }
+            }
+
+
+            for (ZipCode zipCode : populationData) {
+
+                double totalSum = zipCode.getTotalMarketValueAmount();
+                double marketValuePerCapita = totalSum / zipCode.getPopulation();
+                zipCode.setMarketValuePerCapita(marketValuePerCapita);
+
+                if (zipCode.getPopulation() != 0) {
+
+                    method5Memo.put(zipCode.getZipcode(), marketValuePerCapita);
+                } else {
+                    method5Memo.put(zipCode.getZipcode(), 0.0);
+                }
+
+            }
+
+            return method5Memo.get(zipcode);
+        }
+
     }
 
-    public double performCustomOperation(int parameter){
+    public double performCustomOperation(int parameter) {     //mostSpaceForThePrice We'll return thee best house in philly aka most livable area for the least cost in a given zipcod
 
         //This method goes along with requirement #6 in the spec
         //This method will perform some custom operation that we decide on
 
         //Incorporate memoization
+
+
+        //create arraylist of properties
+        //cycle through ALL of our properties and add all the ones in the given zip code to that arraylist
+        //for each property in that arraylist...
+        //calculate the value ratio aka             maximize livable area/marketvalue
+        //if that ratio is greater than the our current highest...
+        // then this one is the current highest
+        //
+
+        // or give average ratio for a given zip code
 
         return 0;
     }
@@ -207,19 +266,26 @@ public class Processor {
 
         HashMap<Integer, Double> testingMethod2 = theProcessor.getTotalFinesPerCapita();
         testingMethod2 = theProcessor.getTotalFinesPerCapita();
+        //testingMethod2 = theProcessor.getTotalFinesPerCapita();
         //System.out.println(testingMethod2.size());
-        for (ZipCode zipcode : theProcessor.populationData) {
-            if (testingMethod2.containsKey(zipcode.getZipcode())) {
 
+
+        for (ZipCode zipcode : theProcessor.populationData) {      //ADD THIS TYPE OF THING TO UI CLASS
+            if (testingMethod2.containsKey(zipcode.getZipcode())) {
 
                 String pattern = "###0.0000";
                 double number = testingMethod2.get(zipcode.getZipcode());
 
                 DecimalFormat nF = new DecimalFormat(pattern);
 
-                System.out.println(zipcode.getZipcode() + " " + nF.format(number));
+                //System.out.println(zipcode.getZipcode() + " " + nF.format(number));
             }
         }
+
+
+        double answer = theProcessor.getResidentialMarketValuePerCapita(11111);
+
+        System.out.println(answer);
 
 
     }
