@@ -1,11 +1,16 @@
 package edu.upenn.cit594.ui;
 
+import edu.upenn.cit594.data.ZipCode;
 import edu.upenn.cit594.datamanagement.ParkingViolationCSVReader;
 import edu.upenn.cit594.datamanagement.ParkingViolationReader;
 import edu.upenn.cit594.datamanagement.PopulationDataReader;
 import edu.upenn.cit594.datamanagement.PropertyValueCSVReader;
 import edu.upenn.cit594.processor.Processor;
 
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.Formatter;
+import java.util.HashMap;
 import java.util.Scanner;
 
 public class UserInterface {
@@ -49,6 +54,7 @@ public class UserInterface {
                     doTotalPopulationForAllZipCodes();
 
                 } else if (choice == 2) {
+                    doGetFinesPerCapita();
 
                 } else if (choice == 3) {
 
@@ -74,13 +80,29 @@ public class UserInterface {
         in.close();
     }
 
-        protected void doTotalPopulationForAllZipCodes() {
-            System.out.println(processor.getTotalPopulationForAllZipCodes());
-        }
+    protected void doTotalPopulationForAllZipCodes() {
+        System.out.println(processor.getTotalPopulationForAllZipCodes());
+    }
 
-        protected void doGetFinesPerCapita(){
+    protected void doGetFinesPerCapita() {
+        HashMap<Integer, Double> finesPerCapita = processor.getTotalFinesPerCapita();
+        ArrayList<ZipCode> allZipCodes = processor.getPopulationData();
+
+        for (ZipCode zipCode : allZipCodes) {
+            if (finesPerCapita.containsKey(zipCode.getZipcode())) {
+
+                Double finesPerCapitaResult = finesPerCapita.get(zipCode.getZipcode());
+
+                String pattern = "###0.0000";
+                DecimalFormat df = new DecimalFormat(pattern);
+
+
+                System.out.println(zipCode.getZipcode() + " " + df.format(finesPerCapitaResult));
+
+            }
 
         }
+    }
 
 
 

@@ -150,6 +150,7 @@ public class Processor {
         //Incorporate memoization
 
         if (zipcode < 9999) {
+
             return 0.0;
         }
 
@@ -221,6 +222,11 @@ public class Processor {
         // or give average ratio for a given zip code
 
         return 0;
+    }
+
+
+    public ArrayList<ZipCode> getPopulationData() {
+        return populationData;
     }
 
 
