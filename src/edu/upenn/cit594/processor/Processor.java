@@ -192,6 +192,11 @@ public class Processor {
 
             }
 
+            if (!method5Memo.containsKey(zipcode)) {
+
+                return 0;
+            }
+
             return method5Memo.get(zipcode);
         }
 
@@ -283,7 +288,7 @@ public class Processor {
         }
 
 
-        double answer = theProcessor.getResidentialMarketValuePerCapita(11111);
+        double answer = theProcessor.getResidentialMarketValuePerCapita(11115);
 
         System.out.println(answer);
 
