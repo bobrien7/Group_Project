@@ -71,54 +71,76 @@ public class UserInterface {
 
                 } else if (choice == 3) {
                     System.out.print("Please enter a zipcode: ");
-                    Boolean indicator1 = true;
-                    while(indicator1){
-                        int zip = in.nextInt();
-                        if(zip > 99999  || zip <9999){
-                            System.out.print("Please enter a valid zipcode: ");
+
+                        Boolean indicator1 = true;
+                        while (indicator1) {
+                            if(in.hasNextInt()) {
+                            int zip = in.nextInt();
+                            if (zip > 99999 || zip < 9999) {
+                                System.out.print("Please enter a valid zipcode: ");
 
 
+                            } else {
+                                doGetAverageMarketValue(zip);
+                                indicator1 = false;
+
+                            }
                         }else {
-                            doGetAverageMarketValue(zip);
-                            indicator1 = false;
+                                System.out.println("Please enter a valid zipcode: ");
+                                in.next();
+                            }
 
-                        }
+
                     }
+
+
 
 
                 } else if (choice == 4) {
                     System.out.print("Please enter a zipcode: ");
-                    Boolean indicator2 = true;
-                    while(indicator2){
-                        int zip = in.nextInt();
-                        if(zip > 99999  || zip <9999){
-                            System.out.print("Please enter a valid zipcode: ");
+
+                        Boolean indicator2 = true;
+                        while (indicator2) {
+                            if(in.hasNextInt()) {
+                                int zip = in.nextInt();
+                                if (zip > 99999 || zip < 9999) {
+                                    System.out.print("Please enter a valid zipcode: ");
 
 
-                        }else {
-                            doGetAverageMarketValue(zip);
-                            indicator2 = false;
+                                } else {
+                                    doGetAverageMarketValue(zip);
+                                    indicator2 = false;
+
+                                }
+                            }else {
+                                System.out.println("Please enter a valid zipcode: ");
+                                in.next();
+                            }
 
                         }
-                    }
+
+
+
 
                 } else if (choice == 5) {
 
                     System.out.print("Please enter a zipcode: ");
                     Boolean indicator3 = true;
-                    while ( indicator3){
-                        int zip = in.nextInt();
-                        if(zip > 99999  || zip <9999){
-                            System.out.print("Please enter a valid zipcode: ");
+                    while ( indicator3) {
+                        if (in.hasNextInt()) {
+                            int zip = in.nextInt();
+                            if (zip > 99999 || zip < 9999) {
+                                System.out.print("Please enter a valid zipcode: ");
 
 
-                        }else {
+                            } else {
+                                doGetResidentialMarketValuePerCapita(zip);
+                                indicator3 = false;
 
-                            doGetResidentialMarketValuePerCapita(zip);
-                            indicator3 = false;
-
-
-
+                            }
+                        } else {
+                            System.out.println("Please enter a valid zipcode: ");
+                            in.next();
                         }
                     }
 
@@ -173,11 +195,15 @@ public class UserInterface {
             String pattern = "###0.0000";
             DecimalFormat df = new DecimalFormat(pattern);
 
-
             System.out.println( df.format(averageMarketValue));
 
         }
         protected void doAverageTotalLivableArea(int zip){
+            Double averageMarketValue = processor.getAverageTotalLivableArea(zip);
+            String pattern = "###0.0000";
+            DecimalFormat df = new DecimalFormat(pattern);
+
+            System.out.println( df.format(averageMarketValue));
 
 
         }
