@@ -15,7 +15,8 @@ public class Main {
         String parkingFileName = "parking.csv";
         String populationFileName = "population.txt";
         String propertyFileName = "properties.csv";
-        String loggerFileName = "logger.txt";
+        loggerFileName = "logger.txt";
+        System.out.println(Main.loggerFileName);
 
         //First thing we should do is log the current time and the runtime arguments 
 

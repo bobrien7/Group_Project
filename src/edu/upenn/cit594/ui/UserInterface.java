@@ -77,7 +77,8 @@ public class UserInterface {
                             if(in.hasNextInt()) {
                             int zip = in.nextInt();
                             if (zip > 99999 || zip < 9999) {
-                                System.out.print("Please enter a valid zipcode: ");
+                                System.out.print(0);  //displays 0 if the user enters an invalid zip code
+                                indicator1 = false;
 
 
                             } else {
@@ -86,7 +87,8 @@ public class UserInterface {
 
                             }
                         }else {
-                                System.out.println("Please enter a valid zipcode: ");
+                                indicator1 = false;
+                                System.out.println(0);
                                 in.next();
                             }
 
@@ -104,16 +106,18 @@ public class UserInterface {
                             if(in.hasNextInt()) {
                                 int zip = in.nextInt();
                                 if (zip > 99999 || zip < 9999) {
-                                    System.out.print("Please enter a valid zipcode: ");
+                                    System.out.print(0);  //displays 0 if the user enters an invalid zip code
+                                    indicator2 = false;
 
 
                                 } else {
-                                    doGetAverageMarketValue(zip);
+                                    doAverageTotalLivableArea(zip);
                                     indicator2 = false;
 
                                 }
                             }else {
-                                System.out.println("Please enter a valid zipcode: ");
+                                System.out.println(0);
+                                indicator2 = false;
                                 in.next();
                             }
 
@@ -199,11 +203,11 @@ public class UserInterface {
 
         }
         protected void doAverageTotalLivableArea(int zip){
-            Double averageMarketValue = processor.getAverageTotalLivableArea(zip);
+            Double averageTotalLivableArea = processor.getAverageTotalLivableArea(zip);
             String pattern = "###0.0000";
             DecimalFormat df = new DecimalFormat(pattern);
 
-            System.out.println( df.format(averageMarketValue));
+            System.out.println(df.format(averageTotalLivableArea));
 
 
         }

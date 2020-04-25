@@ -5,7 +5,9 @@ import edu.upenn.cit594.datamanagement.ParkingViolationCSVReader;
 import edu.upenn.cit594.datamanagement.ParkingViolationReader;
 import edu.upenn.cit594.datamanagement.PopulationDataReader;
 import edu.upenn.cit594.datamanagement.PropertyValueCSVReader;
+import edu.upenn.cit594.logging.Logger;
 
+import java.io.FileWriter;
 import java.io.Reader;
 import java.lang.reflect.Array;
 import java.text.DecimalFormat;
@@ -123,6 +125,15 @@ public class Processor {
         //You also have to LOG the current time and the given zipcode that was entered to the log file
 
         //Incorporate memoization
+        String currentTime = "";
+        String zipCodeThatUserEntered = Integer.toString(zipcode);
+
+        Logger l = Logger.getInstance();
+
+        l.log(zipCodeThatUserEntered);
+        l.log("Hello");
+        l.stopLogging();
+
         if (method3Memo.containsKey(zipcode)) {
             System.out.println("Used memoization");
             return method3Memo.get(zipcode);
@@ -130,10 +141,22 @@ public class Processor {
 
             PropertyDataAverager dataAverager = new MarketValueDataGrabber();
             PropertyAverager averager = new PropertyAverager();
-            double answer = averager.getAverageValue(properties, dataAverager);
+
+            ArrayList<Property> propertiesInZipCode = new ArrayList<>();
+            for (Property theProperty : properties) {
+                //System.out.println(theProperty.getZipCode());
+                //System.out.println(zipcode);
+                if (theProperty.getZipCode() == zipcode) {
+                    propertiesInZipCode.add(theProperty);
+                }
+            }
+            //System.out.println(propertiesInZipCode.size());
+
+            double answer = averager.getAverageValue(propertiesInZipCode, dataAverager);
             System.out.println("No memoization");
             method3Memo.put(zipcode, answer);
             return answer;
+
         }
     }
 
@@ -147,14 +170,27 @@ public class Processor {
 
         //Incorporate memoization
         if (method4Memo.containsKey(zipcode)) {
-            System.out.println("Used memoization");
+
             return method4Memo.get(zipcode);
         } else {
             PropertyDataAverager dataAverager = new TotalLivableAreaDataGrabber();
-            PropertyAverager averager = new PropertyAverager();
-            double answer = averager.getAverageValue(properties, dataAverager);
-            System.out.println("No memoization");
+            PropertyAverager averager2 = new PropertyAverager();
+
+            ArrayList<Property> propertiesInZipCode = new ArrayList<>();
+
+            for (Property theProperty : properties) {
+
+                if (theProperty.getZipCode() == zipcode) {
+                    propertiesInZipCode.add(theProperty);
+
+                }
+            }
+
+            double answer = averager2.getAverageValue(propertiesInZipCode, dataAverager);
+
             method4Memo.put(zipcode, answer);
+
+
             return answer;
         }
 
