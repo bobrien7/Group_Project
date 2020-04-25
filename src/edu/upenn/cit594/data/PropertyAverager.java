@@ -11,7 +11,7 @@ public class PropertyAverager {
         for (Property theProperty : properties) {
 
             double thisAdd = theAverager.getPropertyDataOfInterest(theProperty);
-            System.out.println(thisAdd);
+
             sum = sum + thisAdd;
             count = count + 1;
         }

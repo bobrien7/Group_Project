@@ -1,8 +1,6 @@
 package edu.upenn.cit594;
 
-import edu.upenn.cit594.datamanagement.ParkingViolationCSVReader;
-import edu.upenn.cit594.datamanagement.PopulationDataReader;
-import edu.upenn.cit594.datamanagement.PropertyValueCSVReader;
+import edu.upenn.cit594.datamanagement.*;
 import edu.upenn.cit594.logging.Logger;
 import edu.upenn.cit594.processor.Processor;
 import edu.upenn.cit594.ui.UserInterface;

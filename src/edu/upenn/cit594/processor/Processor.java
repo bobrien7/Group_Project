@@ -25,6 +25,7 @@ public class Processor {
 
     private ArrayList<ParkingViolation> parkingViolations; //TBD what data structure we're gonna use for this
     private ArrayList<ZipCode> populationData; //TBD what data structure we're gonna use for this
+
     private ArrayList<Property> properties; //TBD what data structure we're gonna use for this
 
     //these are our memoization hashmaps
@@ -32,8 +33,6 @@ public class Processor {
     HashMap<Integer, Double> method2Memo = new HashMap<>();
     HashMap<Integer, Double> method3Memo = new HashMap<>();
     HashMap<Integer, Double> method4Memo = new HashMap<>();
-
-
     HashMap<Integer, Double> method5Memo = new HashMap<>();
 
 

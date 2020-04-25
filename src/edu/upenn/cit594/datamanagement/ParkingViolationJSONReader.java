@@ -59,7 +59,7 @@ public class ParkingViolationJSONReader implements ParkingViolationReader {
             }
         for(ParkingViolation pv : parkingViolation){ // for testing
             counter++;
-        }System.out.println(counter);
+        }
 
         return parkingViolation;
     }
