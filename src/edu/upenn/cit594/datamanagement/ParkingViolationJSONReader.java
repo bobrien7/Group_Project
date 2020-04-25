@@ -1,6 +1,7 @@
 package edu.upenn.cit594.datamanagement;
 
 import edu.upenn.cit594.data.ParkingViolation;
+import edu.upenn.cit594.logging.Logger;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -29,6 +30,8 @@ public class ParkingViolationJSONReader implements ParkingViolationReader {
         JSONArray pvJson = null;
         try {
             pvJson = (JSONArray) pvParser.parse(new FileReader(filename));
+            Logger.getInstance().log(filename);
+
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ParseException e) {

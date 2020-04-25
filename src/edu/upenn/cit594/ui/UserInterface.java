@@ -1,13 +1,16 @@
 package edu.upenn.cit594.ui;
 
+import edu.upenn.cit594.Main;
 import edu.upenn.cit594.data.ZipCode;
 import edu.upenn.cit594.datamanagement.ParkingViolationCSVReader;
 import edu.upenn.cit594.datamanagement.ParkingViolationReader;
 import edu.upenn.cit594.datamanagement.PopulationDataReader;
 import edu.upenn.cit594.datamanagement.PropertyValueCSVReader;
+import edu.upenn.cit594.logging.Logger;
 import edu.upenn.cit594.processor.Processor;
 
 import java.text.DecimalFormat;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Formatter;
 import java.util.HashMap;
@@ -27,14 +30,6 @@ public class UserInterface {
     public void start() {
 
         //this method will start up the program
-        System.out.println("Starting program");
-//        System.out.println("Enter 0 to end the program. " );
-//        System.out.println("Enter 1 to get total population. " );
-//        System.out.println("Enter 2 to get parking violation per capita by zipcode.");
-//        System.out.println("Enter 3 for average market value for a zipcode. ");
-//        System.out.println("Enter 4 for average livable area for a zipcode.");
-//        System.out.println("Enter 5 for total market value per capita. ");
-//        System.out.println("Enter 6 for something. ");
 
         Boolean indicator = true;
 
@@ -52,16 +47,23 @@ public class UserInterface {
             if (in.hasNextInt()) {
                 String stringChoice = in.next();
                 int choice = Integer.parseInt(stringChoice);
+
+                Logger.getInstance().log(stringChoice);   //log the users selection
+
                 if (stringChoice.length() != 1) {
-                    System.out.println("Not a valid selection, please choose again");
+                    System.out.println("Not a valid selection, program terminating");
+                    System.exit(0);
+
                 } else if (choice > 6 || choice < 0) {
-                    System.out.println("Not a valid selection, please choose again");
+                    System.out.println("Not a valid selection, program terminating");
+                    System.exit(0);
 
                 }
 
 
                 // if not a number, print line
                 else if (choice == 0) { //end program
+                    Logger.getInstance().stopLogging();
                     System.exit(0);
                 } else if (choice == 1) {
                     doTotalPopulationForAllZipCodes();
@@ -78,6 +80,8 @@ public class UserInterface {
                             int zip = in.nextInt();
                             if (zip > 99999 || zip < 9999) {
                                 System.out.print(0);  //displays 0 if the user enters an invalid zip code
+
+                                Logger.getInstance().log(Integer.toString(zip));
                                 indicator1 = false;
 
 
@@ -89,7 +93,8 @@ public class UserInterface {
                         }else {
                                 indicator1 = false;
                                 System.out.println(0);
-                                in.next();
+                                Logger.getInstance().log(in.next());
+
                             }
 
 
@@ -109,6 +114,7 @@ public class UserInterface {
                                     System.out.print(0);  //displays 0 if the user enters an invalid zip code
                                     indicator2 = false;
 
+                                    Logger.getInstance().log(Integer.toString(zip));
 
                                 } else {
                                     doAverageTotalLivableArea(zip);
@@ -118,7 +124,8 @@ public class UserInterface {
                             }else {
                                 System.out.println(0);
                                 indicator2 = false;
-                                in.next();
+                                Logger.getInstance().log(in.next());
+
                             }
 
                         }
@@ -134,8 +141,10 @@ public class UserInterface {
                         if (in.hasNextInt()) {
                             int zip = in.nextInt();
                             if (zip > 99999 || zip < 9999) {
-                                System.out.print("Please enter a valid zipcode: ");
+                                System.out.print(0);
+                                indicator3 = false;
 
+                                Logger.getInstance().log(Integer.toString(zip));
 
                             } else {
                                 doGetResidentialMarketValuePerCapita(zip);
@@ -143,8 +152,9 @@ public class UserInterface {
 
                             }
                         } else {
-                            System.out.println("Please enter a valid zipcode: ");
-                            in.next();
+                            System.out.println(0);
+                            indicator3 = false;
+                            Logger.getInstance().log(in.next());
                         }
                     }
 
@@ -158,8 +168,10 @@ public class UserInterface {
                 //We gotta make sure we LOG to the logger the CURRENT TIME and the USER SELECTION
 
             } else {
-                System.out.println("Not a valid selection, please choose again");
-                in.next();
+                System.out.println("Not a valid selection, terminating program");
+                Logger.getInstance().log(in.next());
+                Logger.getInstance().stopLogging();
+                System.exit(0);
             }
 
         }

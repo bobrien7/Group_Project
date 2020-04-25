@@ -2,6 +2,7 @@ package edu.upenn.cit594.datamanagement;
 
 import edu.upenn.cit594.data.ParkingViolation;
 import edu.upenn.cit594.data.ZipCode;
+import edu.upenn.cit594.logging.Logger;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -22,6 +23,8 @@ public class PopulationDataReader {
 //        int counter=0;
         try {
             Scanner scanner = new Scanner(new File(filename));
+            Logger.getInstance().log(filename);
+
 
             while (scanner.hasNextLine()) {
                 String data = scanner.nextLine();

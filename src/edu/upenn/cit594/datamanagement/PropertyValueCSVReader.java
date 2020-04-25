@@ -2,6 +2,7 @@ package edu.upenn.cit594.datamanagement;
 
 import edu.upenn.cit594.data.ParkingViolation;
 import edu.upenn.cit594.data.Property;
+import edu.upenn.cit594.logging.Logger;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -25,6 +26,8 @@ public class PropertyValueCSVReader {
         Scanner scanner = null;
         try {
             scanner = new Scanner(new File(filename));
+            Logger.getInstance().log(filename);
+
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();

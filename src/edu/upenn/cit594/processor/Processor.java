@@ -10,7 +10,9 @@ import edu.upenn.cit594.logging.Logger;
 import java.io.FileWriter;
 import java.io.Reader;
 import java.lang.reflect.Array;
+import java.rmi.registry.LocateRegistry;
 import java.text.DecimalFormat;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -125,17 +127,13 @@ public class Processor {
         //You also have to LOG the current time and the given zipcode that was entered to the log file
 
         //Incorporate memoization
-        String currentTime = "";
+
         String zipCodeThatUserEntered = Integer.toString(zipcode);
 
-        Logger l = Logger.getInstance();
-
-        l.log(zipCodeThatUserEntered);
-        l.log("Hello");
-        l.stopLogging();
+        Logger.getInstance().log(zipCodeThatUserEntered);
 
         if (method3Memo.containsKey(zipcode)) {
-            System.out.println("Used memoization");
+            //System.out.println("Used memoization");
             return method3Memo.get(zipcode);
         } else {
 
@@ -144,8 +142,7 @@ public class Processor {
 
             ArrayList<Property> propertiesInZipCode = new ArrayList<>();
             for (Property theProperty : properties) {
-                //System.out.println(theProperty.getZipCode());
-                //System.out.println(zipcode);
+
                 if (theProperty.getZipCode() == zipcode) {
                     propertiesInZipCode.add(theProperty);
                 }
@@ -153,7 +150,7 @@ public class Processor {
             //System.out.println(propertiesInZipCode.size());
 
             double answer = averager.getAverageValue(propertiesInZipCode, dataAverager);
-            System.out.println("No memoization");
+            //System.out.println("No memoization");
             method3Memo.put(zipcode, answer);
             return answer;
 
@@ -167,6 +164,10 @@ public class Processor {
         //This method will return a double that is the average total livable area for a home in the given zip code
 
         //You also have to LOG the current time and the given zipcode that was entered to the log file
+        String zipCodeThatUserEntered = Integer.toString(zipcode);
+
+        Logger.getInstance().log(zipCodeThatUserEntered);
+
 
         //Incorporate memoization
         if (method4Memo.containsKey(zipcode)) {
@@ -202,6 +203,9 @@ public class Processor {
         //This method will return a double that is the total residential market value per capita for the given zip code
 
         //You also have to LOG the current time and the given zipcode that was entered to the log file
+        String zipCodeThatUserEntered = Integer.toString(zipcode);
+
+        Logger.getInstance().log(zipCodeThatUserEntered);
 
         //Incorporate memoization
 
