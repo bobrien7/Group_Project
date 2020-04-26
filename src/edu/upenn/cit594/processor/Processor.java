@@ -150,6 +150,7 @@ public class Processor {
             //System.out.println(propertiesInZipCode.size());
 
             double answer = averager.getAverageValue(propertiesInZipCode, dataAverager);
+
             //System.out.println("No memoization");
             method3Memo.put(zipcode, answer);
             return answer;

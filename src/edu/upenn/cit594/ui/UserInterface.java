@@ -207,7 +207,7 @@ public class UserInterface {
 
 
         Double averageMarketValue = processor.getAverageMarketValue(zip);
-            String pattern = "###0.0000";
+            String pattern = "###0";
             DecimalFormat df = new DecimalFormat(pattern);
 
             System.out.println( df.format(averageMarketValue));
