@@ -52,10 +52,20 @@ public class ZipCode {
     public double getPopulation() {
         return population;
     }
+
     public void setTotalParkingFinesAmount(double totalParkingFinesAmount) {
         this.totalParkingFinesAmount = totalParkingFinesAmount;
     }
+
     public double getTotalParkingFinesAmount() {
         return totalParkingFinesAmount;
+    }
+
+    public int compareTo(Object o) {    //this method was implemented to enable zipcodes to be sorted in ascending order
+        //int x = this.name.compareTo(o.toString());
+        ZipCode object2 = (ZipCode) o;
+        int x = this.getZipcode() - ((ZipCode) o).getZipcode();
+
+        return x;
     }
 }

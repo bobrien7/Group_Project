@@ -11,10 +11,7 @@ import edu.upenn.cit594.processor.Processor;
 
 import java.text.DecimalFormat;
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.Formatter;
-import java.util.HashMap;
-import java.util.Scanner;
+import java.util.*;
 
 public class UserInterface {
 
@@ -183,27 +180,43 @@ public class UserInterface {
     }
 
         protected void doGetFinesPerCapita() {
-        HashMap<Integer, Double> finesPerCapita = processor.getTotalFinesPerCapita();
-        ArrayList<ZipCode> allZipCodes = processor.getPopulationData();
+            HashMap<Integer, Double> finesPerCapita = processor.getTotalFinesPerCapita();
+            ArrayList<ZipCode> allZipCodes = processor.getPopulationData();
+            TreeSet<Integer> allZipCodesInTree = new TreeSet<>();
 
-        for (ZipCode zipCode : allZipCodes) {
-            if (finesPerCapita.containsKey(zipCode.getZipcode())) {
+            for (ZipCode zipCode : allZipCodes) {
+                allZipCodesInTree.add(zipCode.getZipcode());
+            }
 
-                Double finesPerCapitaResult = finesPerCapita.get(zipCode.getZipcode());
+            Iterator<Integer> iterator = allZipCodesInTree.iterator();
+            while (iterator.hasNext()) {
+                Integer current = iterator.next();
+                if (finesPerCapita.containsKey(current)) {
 
-                String pattern = "###0.0000";
-                DecimalFormat df = new DecimalFormat(pattern);
+                    Double finesPerCapitaResult = finesPerCapita.get(current);
+                    String pattern = "###0.0000";
+                    DecimalFormat df = new DecimalFormat(pattern);
+                    System.out.println(current + " " + df.format(finesPerCapitaResult));
 
-
-                System.out.println(zipCode.getZipcode() + " " + df.format(finesPerCapitaResult));
+                }
 
             }
 
-
-
-
+//        for (ZipCode zipCode : allZipCodes) {
+//            if (finesPerCapita.containsKey(zipCode.getZipcode())) {
+//
+//                Double finesPerCapitaResult = finesPerCapita.get(zipCode.getZipcode());
+//
+//                String pattern = "###0.0000";
+//                DecimalFormat df = new DecimalFormat(pattern);
+//
+//
+//                System.out.println(zipCode.getZipcode() + " " + df.format(finesPerCapitaResult));
+//
+//            }
+//
+//        }
         }
-    }
         protected void doGetAverageMarketValue(int zip){
 
 
