@@ -9,6 +9,4 @@ public interface ParkingViolationReader {
 
     ArrayList<ParkingViolation> readParkingViolations();
 
-    void logTimeAndFileName();
-
 }

@@ -12,18 +12,18 @@ public class PopulationDataReader {
 
     private String filename;
 
-    public PopulationDataReader(String filename){
+    public PopulationDataReader(String filename) {
         this.filename = filename;
     }
 
 
-    public ArrayList<ZipCode> read() {
-        //HashMap<ZipCode, Double> zipcodes = new HashMap<ZipCode, Double>();
+    public ArrayList<ZipCode> read() {  //this method returns an arrayList of ZipCode objects that each have an associated population field
+
         ArrayList<ZipCode> theZipCodes = new ArrayList<>();
-//        int counter=0;
+
         try {
             Scanner scanner = new Scanner(new File(filename));
-            Logger.getInstance().log(filename);
+            Logger.getInstance().log(filename);    //log that the file was read
 
 
             while (scanner.hasNextLine()) {
@@ -32,27 +32,15 @@ public class PopulationDataReader {
                 int zipcode = Integer.parseInt(lineData[0]);
                 double population = Integer.parseInt(lineData[1]);
 
-
-                //zipcodes.put(new ZipCode(zipcode, population), population);
-                theZipCodes.add(new ZipCode(zipcode, population));
+                theZipCodes.add(new ZipCode(zipcode, population));  //add the zipCode to the arrayList
             }
             scanner.close();
 
         } catch (FileNotFoundException e) {
         e.printStackTrace();
     }
-//        for(int pd : populationData.values() ) { // for testing
-//            counter++;
-//            System.out.println(pd);
-//        }
-//        }System.out.println(counter);
 
         return theZipCodes;
     }
 
-//    public static void main(String[] args) { //  for testing
-//        PopulationDataReader pvcsv = new PopulationDataReader("population.txt");
-//        pvcsv.read();
-//
-//    }
 }

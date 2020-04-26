@@ -17,19 +17,19 @@ public class Main {
 
         int numberOfArguments = args.length;
 
-        if (numberOfArguments != 5) {
+        if (numberOfArguments != 5) {  //Checks input size
 
             System.out.println("Error Occurred: Terminating Program");
             System.exit(0);
         }
 
-        parkingFileFormat = args[0];         //"parking.csv";
+        parkingFileFormat = args[0];
         parkingFileName = args[1];
         propertyFileName = args[2];
         populationFileName = args[3];
         loggerFileName = args[4];
 
-        FileAuthenticator fileAuthenticator = new FileAuthenticator(parkingFileFormat, parkingFileName, propertyFileName, populationFileName, loggerFileName);
+        FileAuthenticator fileAuthenticator = new FileAuthenticator(parkingFileFormat, parkingFileName, propertyFileName, populationFileName, loggerFileName);  //Authenticate input files
         Boolean fileCheckIndicator = fileAuthenticator.authenticate();
 
         if (!fileCheckIndicator) {
@@ -42,25 +42,25 @@ public class Main {
 
             if (parkingFileFormat.equalsIgnoreCase("CSV")) {
 
-                parkingViolationReader = new ParkingViolationCSVReader(parkingFileName);
+                parkingViolationReader = new ParkingViolationCSVReader(parkingFileName);    //Read csv file
 
             } else {
 
-                parkingViolationReader = new ParkingViolationJSONReader(parkingFileName);
+                parkingViolationReader = new ParkingViolationJSONReader(parkingFileName);  //Read json file
 
             }
 
-            PopulationDataReader populationReader = new PopulationDataReader(populationFileName);
-            PropertyValueCSVReader propertyReader = new PropertyValueCSVReader(propertyFileName);
+            PopulationDataReader populationReader = new PopulationDataReader(populationFileName);  //Read population file
+            PropertyValueCSVReader propertyReader = new PropertyValueCSVReader(propertyFileName);  //Read property file
 
-            Logger.getInstance().log(Main.parkingFileFormat + " " + Main.parkingFileName + " " + Main.propertyFileName + " " + Main.populationFileName + " " + Main.loggerFileName);
+            Logger.getInstance().log(Main.parkingFileFormat + " " + Main.parkingFileName + " " + Main.propertyFileName + " " + Main.populationFileName + " " + Main.loggerFileName);  //log input arguments
             //First thing we should do is log the current time and the runtime arguments
 
-            Processor processor = new Processor(parkingViolationReader, populationReader, propertyReader);
+            Processor processor = new Processor(parkingViolationReader, populationReader, propertyReader);  //Create processor
 
-            UserInterface ui = new UserInterface(processor);
+            UserInterface ui = new UserInterface(processor);  //Create UserInterface
 
-            ui.start();
+            ui.start();  //Start UI
 
         }
 

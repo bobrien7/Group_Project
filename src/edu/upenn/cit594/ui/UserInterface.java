@@ -26,7 +26,7 @@ public class UserInterface {
 
     public void start() {
 
-        //this method will start up the program
+        //this method will start up the program and repeat on loop until the user enters a command to end the program
 
         Boolean indicator = true;
 
@@ -40,7 +40,7 @@ public class UserInterface {
             System.out.println("Enter 3 for average market value for a zipcode. ");
             System.out.println("Enter 4 for average livable area for a zipcode.");
             System.out.println("Enter 5 for total market value per capita. ");
-            System.out.println("Enter 6 for something. ");
+            System.out.println("Enter 6 for average market value and average parking fine by zipcode. ");
             if (in.hasNextInt()) {
                 String stringChoice = in.next();
                 int choice = Integer.parseInt(stringChoice);
@@ -138,7 +138,7 @@ public class UserInterface {
                         if (in.hasNextInt()) {
                             int zip = in.nextInt();
                             if (zip > 99999 || zip < 9999) {
-                                System.out.print(0);
+                                System.out.print(0); //displays 0 if the user enters an invalid zip code
                                 indicator3 = false;
 
                                 Logger.getInstance().log(Integer.toString(zip));
@@ -159,15 +159,11 @@ public class UserInterface {
                     doCustomOperation();
                 }
 
-                //I believe this method will be the one that asks for user input (0,1,2,3,4,5,6)
-                //and executes the related command.
-
-                //We gotta make sure we LOG to the logger the CURRENT TIME and the USER SELECTION
 
             } else {
                 System.out.println("Not a valid selection, terminating program");
                 Logger.getInstance().log(in.next());
-                Logger.getInstance().stopLogging();
+                Logger.getInstance().stopLogging();   //done logging
                 System.exit(0);
             }
 
@@ -175,7 +171,7 @@ public class UserInterface {
         in.close();
     }
 
-        protected void doTotalPopulationForAllZipCodes() {
+    protected void doTotalPopulationForAllZipCodes() {    //UI do method associated with Processor getTotalPopulationForAllZipCodes method
         System.out.println(processor.getTotalPopulationForAllZipCodes());
     }
 
@@ -203,42 +199,44 @@ public class UserInterface {
             }
 
         }
-        protected void doGetAverageMarketValue(int zip){
+
+    protected void doGetAverageMarketValue(int zip) {   //UI do method associated with Processor getAverageMarketValue method
 
 
         Double averageMarketValue = processor.getAverageMarketValue(zip, true);
-            String pattern = "###0";
-            DecimalFormat df = new DecimalFormat(pattern);
+        String pattern = "###0";
+        DecimalFormat df = new DecimalFormat(pattern);
 
-            System.out.println( df.format(averageMarketValue));
+        System.out.println(df.format(averageMarketValue));
+
+    }
+
+    protected void doAverageTotalLivableArea(int zip) {  //UI do method associated with Processor getAverageTotalLivableArea method
+        Double averageTotalLivableArea = processor.getAverageTotalLivableArea(zip);
+        String pattern = "###0.0000";
+        DecimalFormat df = new DecimalFormat(pattern);
+
+        System.out.println(df.format(averageTotalLivableArea));
+
+
+    }
+
+    protected void doGetResidentialMarketValuePerCapita(int zip) {  //UI do method associated with Processor getResidentialMarketValuePerCapita method
+
+
+        Double residentialMarketValue = processor.getResidentialMarketValuePerCapita(zip);
+
+
+        String pattern = "###0";
+        DecimalFormat df = new DecimalFormat(pattern);
+
+
+        System.out.println(df.format(residentialMarketValue));
+
 
         }
-        protected void doAverageTotalLivableArea(int zip){
-            Double averageTotalLivableArea = processor.getAverageTotalLivableArea(zip);
-            String pattern = "###0.0000";
-            DecimalFormat df = new DecimalFormat(pattern);
 
-            System.out.println(df.format(averageTotalLivableArea));
-
-
-        }
-
-        protected void doGetResidentialMarketValuePerCapita(int zip){
-
-
-             Double residentialMarketValue = processor.getResidentialMarketValuePerCapita(zip);
-
-
-            String pattern = "###0";
-            DecimalFormat df = new DecimalFormat(pattern);
-
-
-            System.out.println(df.format(residentialMarketValue));
-
-
-        }
-
-    protected void doCustomOperation() {
+    protected void doCustomOperation() {    //UI do method associated with Processor updateAverageCostForPropertyAndFineForAllZips method
 
         ArrayList<ZipCode> theZipCodes = processor.updateAverageCostForPropertyAndFineForAllZips();
 
@@ -260,25 +258,5 @@ public class UserInterface {
 
         }
     }
-
-
-
-
-
-
-
-
-    public static void main(String[] args) { // testing
-
-        PopulationDataReader populationReader = new PopulationDataReader("population.txt");
-        ParkingViolationReader parkingReader = new ParkingViolationCSVReader("parking.csv");
-        PropertyValueCSVReader propertyReader = new PropertyValueCSVReader("properties.csv");
-
-        Processor processor = new Processor(parkingReader, populationReader, propertyReader);
-        UserInterface ui = new UserInterface(processor);
-        ui.start();
-    }
-
-
 
 }

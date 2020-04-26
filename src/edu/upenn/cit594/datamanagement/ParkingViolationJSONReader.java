@@ -23,7 +23,7 @@ public class ParkingViolationJSONReader implements ParkingViolationReader {
     }
 
     @Override
-    public ArrayList<ParkingViolation> readParkingViolations() {
+    public ArrayList<ParkingViolation> readParkingViolations() {    //this method will return an ArrayList of ParkingViolation objects that are read in from a .JSON file
         ArrayList<ParkingViolation> parkingViolation = new ArrayList<ParkingViolation>();
         int counter = 0;
         JSONParser pvParser = new JSONParser();
@@ -52,7 +52,7 @@ public class ParkingViolationJSONReader implements ParkingViolationReader {
 
                 int violationZipCode = Integer.parseInt(String.valueOf(pv.get("zip_code")));
 
-                parkingViolation.add(new ParkingViolation(timestamp, fineAmount, violationDescription, vehicleID, vehicleState, violationNumber, violationZipCode));
+                parkingViolation.add(new ParkingViolation(timestamp, fineAmount, violationDescription, vehicleID, vehicleState, violationNumber, violationZipCode));  //add parkingViolations to the arrayList
 
             }
 
@@ -62,16 +62,6 @@ public class ParkingViolationJSONReader implements ParkingViolationReader {
         }
 
         return parkingViolation;
-    }
-
-        @Override
-        public void logTimeAndFileName () {
-
-        }
-    public static void main(String[] args) { // for testing
-        ParkingViolationJSONReader pvcsv = new ParkingViolationJSONReader("parking.json");
-        pvcsv.readParkingViolations();
-
     }
 
 }

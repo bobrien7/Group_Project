@@ -5,7 +5,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 
-public class FileAuthenticator {
+public class FileAuthenticator { //This class was created to verify that the input files passed to the program can be opened and read
 
     String parkingFileFormat;
     String parkingFileName;
@@ -24,7 +24,7 @@ public class FileAuthenticator {
 
     }
 
-    public boolean authenticate() {
+    public boolean authenticate() { //This method returns true if the input files are valid according to the project spec
 
         //this method will do all the checks to check the input files
 

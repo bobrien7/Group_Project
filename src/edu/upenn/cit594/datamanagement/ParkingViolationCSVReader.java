@@ -20,7 +20,7 @@ public class ParkingViolationCSVReader implements ParkingViolationReader{ //
 
 
     @Override
-    public ArrayList<ParkingViolation> readParkingViolations() {
+    public ArrayList<ParkingViolation> readParkingViolations() {  //this method will return an ArrayList of ParkingViolation objects that are read in from a .csv file
         ArrayList<ParkingViolation> parkingViolation = new ArrayList<ParkingViolation>();
         int counter = 0;
         try {
@@ -43,7 +43,7 @@ public class ParkingViolationCSVReader implements ParkingViolationReader{ //
                     int violationZipCode = Integer.parseInt(violationData[6]);
 
 
-                    parkingViolation.add(new ParkingViolation(timestamp, fineAmount, violationDescription, vehicleID, vehicleState, violationNumber, violationZipCode));
+                    parkingViolation.add(new ParkingViolation(timestamp, fineAmount, violationDescription, vehicleID, vehicleState, violationNumber, violationZipCode));  //add the ParkingViolation to the ArrayList
                 }
             }
 
@@ -62,16 +62,6 @@ public class ParkingViolationCSVReader implements ParkingViolationReader{ //
     }
 
 
-
-    @Override
-    public void logTimeAndFileName() {
-
-    }
-    public static void main(String[] args) { //  for testing
-        ParkingViolationCSVReader pvcsv = new ParkingViolationCSVReader("parking.csv");
-        pvcsv.readParkingViolations();
-
-    }
 
 
 }

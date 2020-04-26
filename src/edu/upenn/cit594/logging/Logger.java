@@ -24,35 +24,35 @@ public class Logger {
 
         try {
             if (file.createNewFile()) {
-                //System.out.println("Logger file didn't exist, creating now");
+
                 fileWriter = new FileWriter(loggerName);
-                //System.out.println("Logger file created: " + file.getName());
-            } else {                                                                          //this Code needs to append existing logger NOT overwrite it
-                //System.out.println("Logger file already exists: Overwriting now");
+
+            } else {   //this Code needs to append existing logger NOT overwrite it
+
                 fileWriter = new FileWriter(loggerName, true);
                 //fileWriter.write("");
 
             }
         } catch (IOException e) {
             e.printStackTrace();
-            //System.out.println("Error Occured: Wasn't able to create logger file");
+
         }
     }
 
     private static Logger instance = new Logger(loggerName); //Singleton instance
 
-    public static Logger getInstance() { //Part of the singleton design patter
+    public static Logger getInstance() { //Part of the singleton design pattern
         //This method is how other classes will
         //access the single logger instance
         return instance;
     }
 
 
-    public void log(String printedLine) {  //this code will log the given tweet to the log files
+    public void log(String printedLine) {  //this code will log the given string to the log files
 
         try {
 
-            LocalTime localTime = java.time.LocalTime.now();
+            LocalTime localTime = java.time.LocalTime.now();   //logs current time
             String theTime = localTime.toString();
 
             fileWriter.write(theTime + " " + printedLine + "\n");
@@ -66,7 +66,7 @@ public class Logger {
     public void stopLogging() {
 
         try {
-            fileWriter.close();
+            fileWriter.close();    //closes the filewriter when finished logging
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -18,7 +18,7 @@ public class PropertyValueCSVReader {
         this.filename = filename;
     }
 
-    public ArrayList<Property> read() {
+    public ArrayList<Property> read() {          //This method reads in an excel file (.csv) with property information and outputs an arrayList of Population objects
         ArrayList<Property> property = new ArrayList<Property>();
         int totalLivableAreaColumnNumber = 0;
         int marketValueColumnNumber = 0;
@@ -71,7 +71,7 @@ public class PropertyValueCSVReader {
         while (scanner.hasNextLine()) {
             //scanner.hasNextLine()
 
-            ArrayList<String> words = new ArrayList<>();
+            ArrayList<String> words = new ArrayList<>();    //Each string is the contents of each cell in a given line
             String thisLine = scanner.nextLine();
 
             String[] thisLineSplit = thisLine.split(",");
@@ -80,21 +80,18 @@ public class PropertyValueCSVReader {
             int count5 = 0;
 
             int extraWordCount = 0;
-            for (String word : thisLineSplit) {
-                //System.out.print(word + "//");
-                if(extraWordCount != 0){
+            for (String word : thisLineSplit) {     //This for loop contains code that parses each specific line of the given file
+                //Must handle additional commas in input file, (commas that are inside csv cells)
+
+                if (extraWordCount != 0) {          //disregards words that have already been added to the "words" arrayList
 
                     extraWordCount = extraWordCount - 1;
 
-                }
-
-                else if (word.equals("")) {
+                } else if (word.equals("")) {
 
                     words.add(word);
 
-                }
-
-                else if (word.charAt(0) == '\"') {
+                } else if (word.charAt(0) == '\"') {    //handles case where " is at the beginning of the string
 
                     if (word.charAt(word.length() - 1) == '\"' && word.length() > 1) {
 
@@ -106,14 +103,12 @@ public class PropertyValueCSVReader {
                         while (indicator) {
                             location++;
 
-                            if (thisLineSplit[location].charAt(thisLineSplit[location].length() - 1) == '\"') {
+                            if (thisLineSplit[location].charAt(thisLineSplit[location].length() - 1) == '\"') {  //handles case where " is at the end of the string
                                 extraWordCount++;
                                 word = word + thisLineSplit[location];
                                 words.add(word);
                                 indicator = false;
-                            }
-
-                            else {
+                            } else {
                                 word = word + thisLineSplit[location];
                                 extraWordCount++;
                             }
@@ -122,25 +117,22 @@ public class PropertyValueCSVReader {
                         indicator = true;
                     }
 
-                } else if (word.charAt(word.length() - 1) == '\"') {
+                } else if (word.charAt(word.length() - 1) == '\"') {  //Handles case where " is at the end of the string
                     //do nothing
                 } else {
                     words.add(word);
                 }
                 count5++;
             }
-            //System.out.println();
 
-            //System.out.println(thisLine);
             String thisPropertiesMarketValueString = words.get(marketValueColumnNumber);
             String thisPropertiesZipCodeString = words.get(zipCodeColumnNumber);
             String thisPropertiesTotalAreaString = words.get(totalLivableAreaColumnNumber);
-            if(thisPropertiesMarketValueString.equals("")||thisPropertiesZipCodeString.equals("")||thisPropertiesTotalAreaString.equals("")){
+            if (thisPropertiesMarketValueString.equals("") || thisPropertiesZipCodeString.equals("") || thisPropertiesTotalAreaString.equals("")) {  //if any of these are empty, disregard this line
                 scanner.nextLine();
 
                 //do nothing
-            }
-            else {
+            } else {
 //                for(String word : words){
 //                    System.out.print(word + "//");
 //                }
@@ -164,26 +156,18 @@ public class PropertyValueCSVReader {
                     zipCodeSubString = thisPropertiesZipCodeString.substring(0, 5);
                     thisPropertiesZipCode = Integer.parseInt(zipCodeSubString);
 
-                    property.add(new Property(thisPropertiesMarketValue, thisPropertiesZipCode, thisPropertiesTotalArea));
+                    property.add(new Property(thisPropertiesMarketValue, thisPropertiesZipCode, thisPropertiesTotalArea));  //add the property to the arrayList
                 } else {
                     thisPropertiesZipCode = Integer.parseInt(thisPropertiesZipCodeString);
-                    property.add(new Property(thisPropertiesMarketValue, thisPropertiesZipCode, thisPropertiesTotalArea));
+                    property.add(new Property(thisPropertiesMarketValue, thisPropertiesZipCode, thisPropertiesTotalArea));  //add the property to the arrayList
                 }
 
             }
 
-
-            //System.out.println();
         }
 
         scanner.close();
             return property;
-        }
-
-        public static void main (String[]args){ // for testing
-
-            PropertyValueCSVReader reader = new PropertyValueCSVReader("properties_large.csv");
-            reader.read();
         }
 
     }
