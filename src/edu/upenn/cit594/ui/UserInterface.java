@@ -206,7 +206,7 @@ public class UserInterface {
         protected void doGetAverageMarketValue(int zip){
 
 
-        Double averageMarketValue = processor.getAverageMarketValue(zip);
+        Double averageMarketValue = processor.getAverageMarketValue(zip, true);
             String pattern = "###0";
             DecimalFormat df = new DecimalFormat(pattern);
 
@@ -244,9 +244,19 @@ public class UserInterface {
 
         for (ZipCode zipcode : theZipCodes) {
 
-            System.out.print(zipcode.getZipcode() + " ");
-            System.out.print(zipcode.getAverageHouseMarketValue() + " ");
-            System.out.println(zipcode.getAverageParkingTicketCost());
+            if (zipcode.getAverageParkingTicketCost() == 0 || zipcode.getAverageHouseMarketValue() == 0) {
+
+                //do nothing
+            } else {
+                String pattern = "###0";
+                String pattern2 = "###0.00";
+                DecimalFormat df = new DecimalFormat(pattern);
+                DecimalFormat df2 = new DecimalFormat(pattern2);
+
+                System.out.print(zipcode.getZipcode() + " ");
+                System.out.print(df.format(zipcode.getAverageHouseMarketValue()) + " ");
+                System.out.println(df2.format(zipcode.getAverageParkingTicketCost()));
+            }
 
         }
     }

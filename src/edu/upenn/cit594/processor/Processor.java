@@ -35,6 +35,7 @@ public class Processor {
     HashMap<Integer, Double> method3Memo = new HashMap<>();
     HashMap<Integer, Double> method4Memo = new HashMap<>();
     HashMap<Integer, Double> method5Memo = new HashMap<>();
+    HashMap<Integer, ZipCode> method6Memo = new HashMap<>();
 
 
     public Processor(ParkingViolationReader parkingReader, PopulationDataReader populationReader, PropertyValueCSVReader propertyReader) {
@@ -118,7 +119,7 @@ public class Processor {
         }
     }
 
-    public double getAverageMarketValue(int zipcode) {
+    public double getAverageMarketValue(int zipcode, Boolean indicator) {
         //From the Spec we have to use the STRATEGY design pattern to link this method with method #4
 
         //This method goes along with Requirement #3 in the spec
@@ -130,7 +131,10 @@ public class Processor {
 
         String zipCodeThatUserEntered = Integer.toString(zipcode);
 
-        Logger.getInstance().log(zipCodeThatUserEntered);
+        if (indicator) {
+            Logger.getInstance().log(zipCodeThatUserEntered);
+        }
+
 
         if (method3Memo.containsKey(zipcode)) {
             //System.out.println("Used memoization");
@@ -268,8 +272,15 @@ public class Processor {
 
         //This method goes along with requirement #6 in the spec
         //This method will return an array list of zipcodes that have associated average property and parking fine costs as field variables
+        if (!method6Memo.isEmpty()) {
+            return populationData;
+        }
 
-        //Incorporate memoization
+        //reset zipcode fields to zero. This accounts for case where user runs this method twice
+        for (ZipCode zipCode : populationData) {
+            zipCode.setTotalParkingFinesAmount2(0);
+            zipCode.setQuantityOfParkingFines(0);
+        }
 
         for (ParkingViolation parkingTicket : parkingViolations) {
 
@@ -279,7 +290,8 @@ public class Processor {
                     double ticketCount = zipCode.getQuantityOfParkingFines();
                     zipCode.setQuantityOfParkingFines(ticketCount + 1);
 
-
+                    double ticketSum = zipCode.getTotalParkingFinesAmount2();
+                    zipCode.setTotalParkingFinesAmount2(ticketSum + parkingTicket.getFineAmount());
                 }
             }
         }
@@ -288,10 +300,16 @@ public class Processor {
         for (ZipCode zipCode : populationData) {
 
             double averageParkingFine = zipCode.getTotalParkingFinesAmount2() / zipCode.getQuantityOfParkingFines();
-            double averageMarketValueOfHouse = getAverageMarketValue(zipCode.getZipcode());
+            double averageMarketValueOfHouse = getAverageMarketValue(zipCode.getZipcode(), false);
 
-            zipCode.setAverageParkingTicketCost(averageParkingFine);
-            zipCode.setAverageHouseMarketValue(averageMarketValueOfHouse);
+            if (zipCode.getTotalParkingFinesAmount2() == 0 && zipCode.getQuantityOfParkingFines() == 0) {
+                zipCode.setAverageParkingTicketCost(0);
+            } else {
+                zipCode.setAverageParkingTicketCost(averageParkingFine);
+                zipCode.setAverageHouseMarketValue(averageMarketValueOfHouse);
+                method6Memo.put(zipCode.getZipcode(), zipCode);
+            }
+
 
         }
 
@@ -303,78 +321,5 @@ public class Processor {
     public ArrayList<ZipCode> getPopulationData() {
         return populationData;
     }
-
-
-    public static void main(String[] args) {
-
-//        ZipCode zipCode1 = new ZipCode(11111, 10);
-//        ZipCode zipCode2 = new ZipCode(22222, 50);
-//        ZipCode zipCode3 = new ZipCode(33333, 100);
-//
-//        ParkingViolation ticket1 = new ParkingViolation("timestamp", 100, "speeding", 0, "NJ",
-//                1, 11111);
-//
-//        ParkingViolation ticket2 = new ParkingViolation("timestamp", 100, "speeding", 0, "NJ",
-//                1, 11111);
-//
-//        ParkingViolation ticket3 = new ParkingViolation("timestamp", 0, "speeding", 0, "NJ",
-//                1, 22222);
-//
-//        ParkingViolation ticket4 = new ParkingViolation("timestamp", 100, "speeding", 0, "NJ",
-//                1, 22222);
-//
-//
-//        HashMap<ZipCode, Double> zipCodes = new HashMap<>();
-//        zipCodes.put(zipCode1, 11111.0);
-//        zipCodes.put(zipCode2, 22222.0);
-//        zipCodes.put(zipCode3, 33333.0);
-//
-//        ArrayList<ZipCode> theZipCodes = new ArrayList<>();
-//        theZipCodes.add(zipCode1);
-//        theZipCodes.add(zipCode2);
-//        theZipCodes.add(zipCode3);
-//
-//        ArrayList<ParkingViolation> parkingViolation = new ArrayList<>();
-//        parkingViolation.add(ticket1);
-//        parkingViolation.add(ticket2);
-//        parkingViolation.add(ticket3);
-//        parkingViolation.add(ticket4);
-//
-//        getTotalFinesPerCapita(parkingViolation, theZipCodes);
-
-        PopulationDataReader populationReader = new PopulationDataReader("population.txt");
-        ParkingViolationReader parkingReader = new ParkingViolationCSVReader("parking.csv");
-        PropertyValueCSVReader propertyReader = new PropertyValueCSVReader("properties.csv");
-
-        Processor theProcessor = new Processor(parkingReader, populationReader, propertyReader);
-        //System.out.println(theProcessor.getTotalPopulationForAllZipCodes());
-        //System.out.println(theProcessor.getTotalPopulationForAllZipCodes());
-
-        HashMap<Integer, Double> testingMethod2 = theProcessor.getTotalFinesPerCapita();
-        testingMethod2 = theProcessor.getTotalFinesPerCapita();
-        //testingMethod2 = theProcessor.getTotalFinesPerCapita();
-        //System.out.println(testingMethod2.size());
-
-
-        for (ZipCode zipcode : theProcessor.populationData) {      //ADD THIS TYPE OF THING TO UI CLASS
-            if (testingMethod2.containsKey(zipcode.getZipcode())) {
-
-                String pattern = "###0.0000";
-                double number = testingMethod2.get(zipcode.getZipcode());
-
-                DecimalFormat nF = new DecimalFormat(pattern);
-
-                //System.out.println(zipcode.getZipcode() + " " + nF.format(number));
-            }
-        }
-
-
-        double answer = theProcessor.getResidentialMarketValuePerCapita(11115);
-
-        System.out.println(answer);
-
-
-    }
-
 
 }
