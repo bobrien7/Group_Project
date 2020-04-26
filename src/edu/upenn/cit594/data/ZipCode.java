@@ -9,6 +9,14 @@ public class ZipCode {
 
     private double totalParkingFinesAmount;
 
+    private double totalParkingFinesAmount2;
+
+    private double quantityOfParkingFines;
+
+    private double averageParkingTicketCost;
+
+    private double averageHouseMarketValue;
+
     public double getTotalMarketValueAmount() {
         return totalMarketValueAmount;
     }
@@ -61,11 +69,35 @@ public class ZipCode {
         return totalParkingFinesAmount;
     }
 
-    public int compareTo(Object o) {    //this method was implemented to enable zipcodes to be sorted in ascending order
-        //int x = this.name.compareTo(o.toString());
-        ZipCode object2 = (ZipCode) o;
-        int x = this.getZipcode() - ((ZipCode) o).getZipcode();
+    public double getQuantityOfParkingFines() {
+        return quantityOfParkingFines;
+    }
 
-        return x;
+    public void setQuantityOfParkingFines(double quantityOfParkingFines) {
+        this.quantityOfParkingFines = quantityOfParkingFines;
+    }
+
+    public double getAverageParkingTicketCost() {
+        return averageParkingTicketCost;
+    }
+
+    public void setAverageParkingTicketCost(double averageParkingTicketCost) {
+        this.averageParkingTicketCost = averageParkingTicketCost;
+    }
+
+    public double getAverageHouseMarketValue() {
+        return averageHouseMarketValue;
+    }
+
+    public void setAverageHouseMarketValue(double averageHouseMarketValue) {
+        this.averageHouseMarketValue = averageHouseMarketValue;
+    }
+
+    public double getTotalParkingFinesAmount2() {
+        return totalParkingFinesAmount2;
+    }
+
+    public void setTotalParkingFinesAmount2(double totalParkingFinesAmount2) {
+        this.totalParkingFinesAmount2 = totalParkingFinesAmount2;
     }
 }

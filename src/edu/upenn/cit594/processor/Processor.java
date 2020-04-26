@@ -16,6 +16,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.TreeSet;
 
 public class Processor {
 
@@ -262,25 +263,39 @@ public class Processor {
 
     }
 
-    public double performCustomOperation(int parameter) {     //mostSpaceForThePrice We'll return thee best house in philly aka most livable area for the least cost in a given zipcod
+    public ArrayList<ZipCode> updateAverageCostForPropertyAndFineForAllZips() {
 
         //This method goes along with requirement #6 in the spec
-        //This method will perform some custom operation that we decide on
+        //This method will return an array list of zipcodes that have associated average property and parking fine costs as field variables
 
         //Incorporate memoization
 
+        for (ParkingViolation parkingTicket : parkingViolations) {
 
-        //create arraylist of properties
-        //cycle through ALL of our properties and add all the ones in the given zip code to that arraylist
-        //for each property in that arraylist...
-        //calculate the value ratio aka             maximize livable area/marketvalue
-        //if that ratio is greater than the our current highest...
-        // then this one is the current highest
-        //
+            for (ZipCode zipCode : populationData) {
 
-        // or give average ratio for a given zip code
+                if (zipCode.getZipcode() == parkingTicket.getViolationZipCode()) {
+                    double ticketCount = zipCode.getQuantityOfParkingFines();
+                    zipCode.setQuantityOfParkingFines(ticketCount + 1);
 
-        return 0;
+
+                }
+            }
+        }
+
+
+        for (ZipCode zipCode : populationData) {
+
+            double averageParkingFine = zipCode.getTotalParkingFinesAmount2() / zipCode.getQuantityOfParkingFines();
+            double averageMarketValueOfHouse = getAverageMarketValue(zipCode.getZipcode());
+
+            zipCode.setAverageParkingTicketCost(averageParkingFine);
+            zipCode.setAverageHouseMarketValue(averageMarketValueOfHouse);
+
+        }
+
+        return populationData;
+
     }
 
 

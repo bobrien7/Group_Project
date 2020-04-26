@@ -156,7 +156,7 @@ public class UserInterface {
                     }
 
                 } else if (choice == 6) {
-
+                    doCustomOperation();
                 }
 
                 //I believe this method will be the one that asks for user input (0,1,2,3,4,5,6)
@@ -202,20 +202,6 @@ public class UserInterface {
 
             }
 
-//        for (ZipCode zipCode : allZipCodes) {
-//            if (finesPerCapita.containsKey(zipCode.getZipcode())) {
-//
-//                Double finesPerCapitaResult = finesPerCapita.get(zipCode.getZipcode());
-//
-//                String pattern = "###0.0000";
-//                DecimalFormat df = new DecimalFormat(pattern);
-//
-//
-//                System.out.println(zipCode.getZipcode() + " " + df.format(finesPerCapitaResult));
-//
-//            }
-//
-//        }
         }
         protected void doGetAverageMarketValue(int zip){
 
@@ -243,17 +229,27 @@ public class UserInterface {
              Double residentialMarketValue = processor.getResidentialMarketValuePerCapita(zip);
 
 
-                    String pattern = "###0";
-                    DecimalFormat df = new DecimalFormat(pattern);
+            String pattern = "###0";
+            DecimalFormat df = new DecimalFormat(pattern);
 
 
-                    System.out.println( df.format(residentialMarketValue));
+            System.out.println(df.format(residentialMarketValue));
 
 
+        }
 
-            }
+    protected void doCustomOperation() {
 
+        ArrayList<ZipCode> theZipCodes = processor.updateAverageCostForPropertyAndFineForAllZips();
 
+        for (ZipCode zipcode : theZipCodes) {
+
+            System.out.print(zipcode.getZipcode() + " ");
+            System.out.print(zipcode.getAverageHouseMarketValue() + " ");
+            System.out.println(zipcode.getAverageParkingTicketCost());
+
+        }
+    }
 
 
 
